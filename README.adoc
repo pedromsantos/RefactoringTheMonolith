@@ -1,0 +1,27 @@
+= Refactoring the Monolith: LIVE!
+
+[abstract]
+--
+Many of us would love to embrace microservices in our day-to-day work. But most of us don’t have the opportunity to start over with a pure greenfield effort. We have to understand how to refactor our existing monolithic applications toward microservices. Practical steps include building new features as microservices, leveraging anti-corruption layers, strangling the monolith.
+
+In this presentation we’ll go light on the theory and walk through the actual process of turning a strawman monolith into a family of well-factored microservices.
+--
+
+== Background Reading
+
+Here is a list of resources that you can review before attending the session to provide useful context.
+
+=== Books
+
+* Evans, Eric. http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215[_Domain-Driven Design: Tackling Complexity in the Heart of Software_]. (Pay special attention to Part IV: Strategic Design!)
+* Vernon, Vaughn. http://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577[_Implementing Domain-Driven Design_]. (Pay special attention to chapters 1-4!)
+* Newman, Sam. http://www.amazon.com/Building-Microservices-Sam-Newman/dp/1491950358[_Building Microservices_]. (Pay special attention to chapter 5!)
+* Feathers, Michael. http://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052[_Working Effectively with Legacy Code_].
+* Stine, Matt. http://pivotal.io/platform/migrating-to-cloud-native-application-architectures-ebook[_Migrating to Cloud Native Application Architectures_]. (Pay special attention to chapter 3!)
+
+=== Articles/Blogs
+
+* https://developers.soundcloud.com/blog/building-products-at-soundcloud-part-1-dealing-with-the-monolith[Building Products at SoundCloud -- Part I: Dealing with the Monolith]
+* https://developers.soundcloud.com/blog/building-products-at-soundcloud-part-2-breaking-the-monolith[Building Products at SoundCloud -- Part II: Breaking the Monolith]
+* http://philcalcado.com/2015/09/08/how_we_ended_up_with_microservices.html[Phil Calçado -- How we ended up with microservices.]
+* http://www.martinfowler.com/bliki/StranglerApplication.html[Martin Fowler -- StranglerApplication]
