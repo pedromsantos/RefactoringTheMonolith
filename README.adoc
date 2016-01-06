@@ -28,6 +28,15 @@ Their current system is very monolithic and is deployed at every store! As their
 
 Recently the Monolito brothers learned about the promise of microservices architectures enabling continuous delivery of business value. They've contracted our team of consultants to help decompose their monolith so that they can get back on track.
 
+== What this Presentation ``Punts'' On
+
+While these subtopics deserve consideration, in the interest of fitting in to the allotted time (90 minutes), I simply couldn't include everything. I also wanted to focus on the decomposition of the business functionality, and not on the tedium of technology stack migration:
+
+* J2EE/Java EE to Spring Migration
+* Classic Spring to Spring Boot Migration
+* Polyglot Persistence
+* Distributed Transactions, Event Sourcing/CQRS
+
 == Background Reading
 
 Here is a list of resources that you can review before attending the session to provide useful context.
