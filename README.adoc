@@ -1,4 +1,5 @@
 = Refactoring the Monolith: LIVE!
+:compat-mode:
 
 [abstract]
 --
