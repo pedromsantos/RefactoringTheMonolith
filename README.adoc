@@ -7,6 +7,26 @@ Many of us would love to embrace microservices in our day-to-day work. But most 
 In this presentation we’ll go light on the theory and walk through the actual process of turning a strawman monolith into a family of well-factored microservices.
 --
 
+== The Story
+
+The Monolito brothers started their dream business of running their own chain of pizza parlors. They've expanded their business to include 20 locations across a large metro area, and they want to expand to other cities and states. Their original careers were as software engineers, so naturally they built their own systems to manage their business. These systems included:
+
+* an online ordering system for customers to place pizza orders via the web
+* a dispatch system to send these orders to the correct store locations
+* a menu management system to keep up with all of the allowable pizza combinations, toppings, etc.
+
+As they've grown their business, they've felt pressure from their customers to add additional features that ``the big pizza chains'' have, such as:
+
+* managing multiple customer addresses
+* reordering past orders
+* managing coupons
+* tracking the status of an order
+* conducting business via mobile devices
+
+Their current system is very monolithic and is deployed at every store! As their software development team has grown in size to meet their customers' demands, they've become paralyzed by the difficulty of adding new features to an ever-growing codebase that must be redeployed to every Monolito's Pizza location with every change.
+
+Recently the Monolito brothers learned about the promise of microservices architectures enabling continuous delivery of business value. They've contracted our team of consultants to help decompose their monolith so that they can get back on track.
+
 == Background Reading
 
 Here is a list of resources that you can review before attending the session to provide useful context.
