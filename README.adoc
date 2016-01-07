@@ -36,6 +36,7 @@ While these subtopics deserve consideration, in the interest of fitting in to th
 * Classic Spring to Spring Boot Migration
 * Polyglot Persistence
 * Distributed Transactions, Event Sourcing/CQRS
+* Fancy, modern, Javascript-y web UI's - I am *not* a UI developer.
 
 == Background Reading
 
