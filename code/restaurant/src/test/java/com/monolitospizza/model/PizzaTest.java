@@ -2,6 +2,8 @@ package com.monolitospizza.model;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertFalse;
@@ -165,6 +167,28 @@ public class PizzaTest {
         pizza.removeRightTopping(Topping.SAUSAGE);
 
         assertFalse(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+    }
+
+    @Test
+    public void defaultPizzaHasDefaultPrice() {
+        Pizza pizza = new Pizza();
+
+        assertThat(Size.LARGE.getPrice(), equalTo(pizza.getPrice()));
+    }
+
+    @Test
+    public void pizzaWithToppingsIncludesThemInPrice() {
+        Pizza pizza = new Pizza();
+
+        pizza.addLeftTopping(Topping.SAUSAGE);
+        pizza.addRightTopping(Topping.ONION);
+
+        BigDecimal expectedPrice =
+                Size.LARGE.getPrice()
+                        .add(Topping.SAUSAGE.getPrice())
+                        .add(Topping.ONION.getPrice());
+
+        assertThat(expectedPrice, equalTo(pizza.getPrice()));
     }
 
 }

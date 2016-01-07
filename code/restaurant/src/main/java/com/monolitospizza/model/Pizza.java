@@ -1,5 +1,7 @@
 package com.monolitospizza.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Matt Stine
  */
@@ -96,5 +98,11 @@ public class Pizza {
 
     public Sauce getSauce() {
         return sauce;
+    }
+
+    public BigDecimal getPrice() {
+        return this.size.getPrice()
+                .add(this.leftHalf.getPrice())
+                .add(this.rightHalf.getPrice());
     }
 }
