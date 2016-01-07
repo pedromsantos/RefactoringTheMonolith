@@ -27,6 +27,6 @@ public class HalfTest {
         half.addTopping(Topping.ONION);
         half.addTopping(Topping.BELL_PEPPER);
 
-        assertThat(BigDecimal.valueOf(3), equalTo(half.getPrice()));
+        assertThat(BigDecimal.valueOf(1.5), equalTo(half.getPrice()));
     }
 }

@@ -6,16 +6,16 @@ import java.math.BigDecimal;
  * @author Matt Stine
  */
 public enum Topping {
-    SAUSAGE(new BigDecimal(1.00)),
-    PEPPERONI(new BigDecimal(1.00)),
-    BEEF(new BigDecimal(1.00)),
-    HAM(new BigDecimal(1.00)),
-    BACON(new BigDecimal(1.00)),
-    ONION(new BigDecimal(1.00)),
-    BELL_PEPPER(new BigDecimal(1.00)),
-    MUSHROOM(new BigDecimal(1.00)),
-    GREEN_OLIVE(new BigDecimal(1.00)),
-    BLACK_OLIVE(new BigDecimal(1.00));
+    SAUSAGE(new BigDecimal(0.5)),
+    PEPPERONI(new BigDecimal(0.5)),
+    BEEF(new BigDecimal(0.5)),
+    HAM(new BigDecimal(0.5)),
+    BACON(new BigDecimal(0.5)),
+    ONION(new BigDecimal(0.5)),
+    BELL_PEPPER(new BigDecimal(0.5)),
+    MUSHROOM(new BigDecimal(0.5)),
+    GREEN_OLIVE(new BigDecimal(0.5)),
+    BLACK_OLIVE(new BigDecimal(0.5));
 
     Topping(BigDecimal price) {
         this.price = price;

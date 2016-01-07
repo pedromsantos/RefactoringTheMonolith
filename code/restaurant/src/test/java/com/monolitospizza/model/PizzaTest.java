@@ -170,6 +170,27 @@ public class PizzaTest {
     }
 
     @Test
+    public void canAddWholeTopping() {
+        Pizza pizza = new Pizza();
+
+        pizza.addTopping(Topping.SAUSAGE);
+
+        assertTrue(pizza.getLeftHalf().getToppings().contains(Topping.SAUSAGE));
+        assertTrue(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+    }
+
+    @Test
+    public void canRemoveWholeTopping() {
+        Pizza pizza = new Pizza();
+
+        pizza.addTopping(Topping.SAUSAGE);
+        pizza.removeTopping(Topping.SAUSAGE);
+
+        assertFalse(pizza.getLeftHalf().getToppings().contains(Topping.SAUSAGE));
+        assertFalse(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+    }
+
+    @Test
     public void defaultPizzaHasDefaultPrice() {
         Pizza pizza = new Pizza();
 

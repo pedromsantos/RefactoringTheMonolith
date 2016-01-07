@@ -105,4 +105,14 @@ public class Pizza {
                 .add(this.leftHalf.getPrice())
                 .add(this.rightHalf.getPrice());
     }
+
+    public void addTopping(Topping topping) {
+        addLeftTopping(topping);
+        addRightTopping(topping);
+    }
+
+    public void removeTopping(Topping topping) {
+        removeLeftTopping(topping);
+        removeRightTopping(topping);
+    }
 }
