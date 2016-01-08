@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -14,10 +16,21 @@ import static org.junit.Assert.assertThat;
 public class OrderTest {
 
     private Order order;
+    private Customer customer;
 
     @Before
     public void setUp() throws Exception {
-        order = new Order(OrderType.FOR_DELIVERY);
+        customer = new Customer("Rey", "rey@theresistance.com", "+1(999)999-9999");
+
+        Address address = new Address(
+                "875 Howard St.",
+                "San Francisco",
+                "CA",
+                "94101"
+        );
+        customer.setAddress(address);
+
+        order = new Order(OrderType.FOR_DELIVERY, customer);
     }
 
     @Test
@@ -25,9 +38,15 @@ public class OrderTest {
         assertThat(order.getType(), equalTo(OrderType.FOR_DELIVERY));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void deliveryOrderMustHaveCustomerWithAddress() {
+        customer = new Customer("Rey", "rey@theresistance.com", "+1(999)999-9999");
+        order = new Order(OrderType.FOR_DELIVERY, customer);
+    }
+
     @Test
     public void orderCanBeForPickup() {
-        order = new Order(OrderType.FOR_PICKUP);
+        order = new Order(OrderType.FOR_PICKUP, customer);
 
         assertThat(order.getType(), equalTo(OrderType.FOR_PICKUP));
     }
@@ -63,5 +82,10 @@ public class OrderTest {
         order.addPizza(secondPizza);
 
         assertThat(order.getPrice(), equalTo(expectedPrice));
+    }
+
+    @Test
+    public void orderMustHaveACustomer() {
+        assertThat(order.getCustomer(), is(notNullValue()));
     }
 }
