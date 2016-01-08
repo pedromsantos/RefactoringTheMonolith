@@ -9,6 +9,11 @@ import java.util.List;
  */
 public class Order {
     private List<Pizza> pizzas = new ArrayList<>();
+    private OrderType type;
+
+    public Order(OrderType type) {
+        this.type = type;
+    }
 
     public BigDecimal getPrice() {
         return pizzas
@@ -19,5 +24,9 @@ public class Order {
 
     public void addPizza(Pizza pizza) {
         this.pizzas.add(pizza);
+    }
+
+    public OrderType getType() {
+        return type;
     }
 }

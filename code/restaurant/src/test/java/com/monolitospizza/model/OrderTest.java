@@ -1,5 +1,6 @@
 package com.monolitospizza.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -12,16 +13,32 @@ import static org.junit.Assert.assertThat;
  */
 public class OrderTest {
 
+    private Order order;
+
+    @Before
+    public void setUp() throws Exception {
+        order = new Order(OrderType.FOR_DELIVERY);
+    }
+
+    @Test
+    public void orderCanBeForDelivery() {
+        assertThat(order.getType(), equalTo(OrderType.FOR_DELIVERY));
+    }
+
+    @Test
+    public void orderCanBeForPickup() {
+        order = new Order(OrderType.FOR_PICKUP);
+
+        assertThat(order.getType(), equalTo(OrderType.FOR_PICKUP));
+    }
+
     @Test
     public void emptyOrderHasNoPrice() {
-        Order order = new Order();
-
         assertThat(BigDecimal.ZERO, equalTo(order.getPrice()));
     }
 
     @Test
     public void orderWithOnePizzaHasPriceOfPizza() {
-        Order order = new Order();
         Pizza pizza = new Pizza();
 
         order.addPizza(pizza);
@@ -31,8 +48,6 @@ public class OrderTest {
 
     @Test
     public void orderWithTwoPizzasHasSumOfTheirPrices() {
-        Order order = new Order();
-
         Pizza firstPizza = new Pizza(Size.MEDIUM);
         firstPizza.addTopping(Topping.BEEF);
         firstPizza.addTopping(Topping.BACON);
