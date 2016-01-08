@@ -23,9 +23,9 @@ public class HalfTest {
     public void halfWithToppingsKnowsItsPrice() {
         Half half = new Half();
 
-        half.addTopping(Topping.SAUSAGE);
-        half.addTopping(Topping.ONION);
-        half.addTopping(Topping.BELL_PEPPER);
+        half.addTopping(new Topping("Sausage", BigDecimal.valueOf(0.5)));
+        half.addTopping(new Topping("Onion", BigDecimal.valueOf(0.5)));
+        half.addTopping(new Topping("Bell Pepper", BigDecimal.valueOf(0.5)));
 
         assertThat(BigDecimal.valueOf(1.5), equalTo(half.getPrice()));
     }

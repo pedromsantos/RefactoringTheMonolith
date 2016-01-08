@@ -1,15 +1,25 @@
 package com.monolitospizza.model;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 
 /**
  * @author Matt Stine
  */
+@Entity
 public class Pizza {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     private Size size;
     private Crust crust;
+    @Embedded
     private Half leftHalf;
+    @Embedded
     private Half rightHalf;
     private Sauce sauce;
 
@@ -114,5 +124,9 @@ public class Pizza {
     public void removeTopping(Topping topping) {
         removeLeftTopping(topping);
         removeRightTopping(topping);
+    }
+
+    public Long getId() {
+        return id;
     }
 }

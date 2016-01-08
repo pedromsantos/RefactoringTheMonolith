@@ -1,29 +1,50 @@
 package com.monolitospizza.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * @author Matt Stine
  */
-public enum Topping {
-    SAUSAGE(new BigDecimal(0.5)),
-    PEPPERONI(new BigDecimal(0.5)),
-    BEEF(new BigDecimal(0.5)),
-    HAM(new BigDecimal(0.5)),
-    BACON(new BigDecimal(0.5)),
-    ONION(new BigDecimal(0.5)),
-    BELL_PEPPER(new BigDecimal(0.5)),
-    MUSHROOM(new BigDecimal(0.5)),
-    GREEN_OLIVE(new BigDecimal(0.5)),
-    BLACK_OLIVE(new BigDecimal(0.5));
+@Entity
+public class Topping {
 
-    Topping(BigDecimal price) {
+    @Id
+    @GeneratedValue
+    private Long id;
+    private BigDecimal price;
+    private String name;
+
+    public Topping(String name, BigDecimal price) {
+        this.name = name;
         this.price = price;
     }
 
-    private BigDecimal price;
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Topping topping = (Topping) o;
+        return Objects.equals(name, topping.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

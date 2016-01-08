@@ -1,5 +1,6 @@
 package com.monolitospizza.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -14,6 +15,13 @@ import static org.junit.Assert.assertTrue;
  * @author Matt Stine
  */
 public class PizzaTest {
+
+    private Topping sausage;
+
+    @Before
+    public void setUp() throws Exception {
+        sausage = new Topping("Sausage", BigDecimal.valueOf(0.5));
+    }
 
     @Test
     public void newPizzaHasTwoHalves() {
@@ -135,59 +143,59 @@ public class PizzaTest {
     public void canAddLeftTopping() {
         Pizza pizza = new Pizza();
 
-        pizza.addLeftTopping(Topping.SAUSAGE);
+        pizza.addLeftTopping(sausage);
 
-        assertTrue(pizza.getLeftHalf().getToppings().contains(Topping.SAUSAGE));
+        assertTrue(pizza.getLeftHalf().getToppings().contains(sausage));
     }
 
     @Test
     public void canRemoveLeftTopping() {
         Pizza pizza = new Pizza();
 
-        pizza.addLeftTopping(Topping.SAUSAGE);
-        pizza.removeLeftTopping(Topping.SAUSAGE);
+        pizza.addLeftTopping(sausage);
+        pizza.removeLeftTopping(sausage);
 
-        assertFalse(pizza.getLeftHalf().getToppings().contains(Topping.SAUSAGE));
+        assertFalse(pizza.getLeftHalf().getToppings().contains(sausage));
     }
 
     @Test
     public void canAddRightTopping() {
         Pizza pizza = new Pizza();
 
-        pizza.addRightTopping(Topping.SAUSAGE);
+        pizza.addRightTopping(sausage);
 
-        assertTrue(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+        assertTrue(pizza.getRightHalf().getToppings().contains(sausage));
     }
 
     @Test
     public void canRemoveRightTopping() {
         Pizza pizza = new Pizza();
 
-        pizza.addRightTopping(Topping.SAUSAGE);
-        pizza.removeRightTopping(Topping.SAUSAGE);
+        pizza.addRightTopping(sausage);
+        pizza.removeRightTopping(sausage);
 
-        assertFalse(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+        assertFalse(pizza.getRightHalf().getToppings().contains(sausage));
     }
 
     @Test
     public void canAddWholeTopping() {
         Pizza pizza = new Pizza();
 
-        pizza.addTopping(Topping.SAUSAGE);
+        pizza.addTopping(sausage);
 
-        assertTrue(pizza.getLeftHalf().getToppings().contains(Topping.SAUSAGE));
-        assertTrue(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+        assertTrue(pizza.getLeftHalf().getToppings().contains(sausage));
+        assertTrue(pizza.getRightHalf().getToppings().contains(sausage));
     }
 
     @Test
     public void canRemoveWholeTopping() {
         Pizza pizza = new Pizza();
 
-        pizza.addTopping(Topping.SAUSAGE);
-        pizza.removeTopping(Topping.SAUSAGE);
+        pizza.addTopping(sausage);
+        pizza.removeTopping(sausage);
 
-        assertFalse(pizza.getLeftHalf().getToppings().contains(Topping.SAUSAGE));
-        assertFalse(pizza.getRightHalf().getToppings().contains(Topping.SAUSAGE));
+        assertFalse(pizza.getLeftHalf().getToppings().contains(sausage));
+        assertFalse(pizza.getRightHalf().getToppings().contains(sausage));
     }
 
     @Test
@@ -201,13 +209,13 @@ public class PizzaTest {
     public void pizzaWithToppingsIncludesThemInPrice() {
         Pizza pizza = new Pizza();
 
-        pizza.addLeftTopping(Topping.SAUSAGE);
-        pizza.addRightTopping(Topping.ONION);
+        pizza.addLeftTopping(sausage);
+        pizza.addRightTopping(new Topping("Onion", BigDecimal.valueOf(0.5)));
 
         BigDecimal expectedPrice =
                 Size.LARGE.getPrice()
-                        .add(Topping.SAUSAGE.getPrice())
-                        .add(Topping.ONION.getPrice());
+                        .add(sausage.getPrice())
+                        .add(new Topping("Onion", BigDecimal.valueOf(0.5)).getPrice());
 
         assertThat(expectedPrice, equalTo(pizza.getPrice()));
     }

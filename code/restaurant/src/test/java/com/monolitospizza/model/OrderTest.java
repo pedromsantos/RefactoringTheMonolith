@@ -68,12 +68,12 @@ public class OrderTest {
     @Test
     public void orderWithTwoPizzasHasSumOfTheirPrices() {
         Pizza firstPizza = new Pizza(Size.MEDIUM);
-        firstPizza.addTopping(Topping.BEEF);
-        firstPizza.addTopping(Topping.BACON);
+        firstPizza.addTopping(new Topping("Beef", BigDecimal.valueOf(0.5)));
+        firstPizza.addTopping(new Topping("Bacon", BigDecimal.valueOf(0.5)));
 
         Pizza secondPizza = new Pizza(Size.SMALL);
-        secondPizza.addTopping(Topping.PEPPERONI);
-        secondPizza.addTopping(Topping.MUSHROOM);
+        secondPizza.addTopping(new Topping("Pepperoni", BigDecimal.valueOf(0.5)));
+        secondPizza.addTopping(new Topping("Mushroom", BigDecimal.valueOf(0.5)));
 
         BigDecimal expectedPrice = firstPizza
                 .getPrice().add(secondPizza.getPrice());
