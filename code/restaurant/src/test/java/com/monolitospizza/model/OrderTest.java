@@ -58,7 +58,9 @@ public class OrderTest {
 
     @Test
     public void orderWithOnePizzaHasPriceOfPizza() {
-        Pizza pizza = new Pizza();
+        Pizza pizza = new Pizza(new Size("Large", BigDecimal.valueOf(12.99)),
+                new Crust("Thin"),
+                new Sauce("Normal"));
 
         order.addPizza(pizza);
 
@@ -67,11 +69,15 @@ public class OrderTest {
 
     @Test
     public void orderWithTwoPizzasHasSumOfTheirPrices() {
-        Pizza firstPizza = new Pizza(Size.MEDIUM);
+        Pizza firstPizza = new Pizza(new Size("Large", BigDecimal.valueOf(12.99)),
+                new Crust("Thin"),
+                new Sauce("Normal"));
         firstPizza.addTopping(new Topping("Beef", BigDecimal.valueOf(0.5)));
         firstPizza.addTopping(new Topping("Bacon", BigDecimal.valueOf(0.5)));
 
-        Pizza secondPizza = new Pizza(Size.SMALL);
+        Pizza secondPizza = new Pizza(new Size("Large", BigDecimal.valueOf(12.99)),
+                new Crust("Thin"),
+                new Sauce("Normal"));
         secondPizza.addTopping(new Topping("Pepperoni", BigDecimal.valueOf(0.5)));
         secondPizza.addTopping(new Topping("Mushroom", BigDecimal.valueOf(0.5)));
 

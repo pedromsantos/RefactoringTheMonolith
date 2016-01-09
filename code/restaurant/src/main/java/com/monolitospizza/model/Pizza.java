@@ -1,9 +1,6 @@
 package com.monolitospizza.model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
@@ -15,54 +12,20 @@ public class Pizza {
     @Id
     @GeneratedValue
     private Long id;
+    @OneToOne
     private Size size;
+    @OneToOne
     private Crust crust;
     @Embedded
     private Half leftHalf;
     @Embedded
     private Half rightHalf;
+    @OneToOne
     private Sauce sauce;
 
-    public Pizza() {
+    private Pizza() {
         leftHalf = new Half();
         rightHalf = new Half();
-
-        size = Size.LARGE;
-        crust = Crust.THIN;
-        sauce = Sauce.NORMAL;
-    }
-
-    public Pizza(Size size) {
-        this();
-        this.size = size;
-    }
-
-    public Pizza(Crust crust) {
-        this();
-        this.crust = crust;
-    }
-
-    public Pizza(Sauce sauce) {
-        this();
-        this.sauce = sauce;
-    }
-
-    public Pizza(Size size, Crust crust) {
-        this();
-        this.size = size;
-        this.crust = crust;
-    }
-
-    public Pizza(Size size, Sauce sauce) {
-        this();
-        this.size = size;
-        this.sauce = sauce;
-    }
-
-    public Pizza(Crust crust, Sauce sauce) {
-        this();
-        this.crust = crust;
-        this.sauce = sauce;
     }
 
     public Pizza(Size size, Crust crust, Sauce sauce) {
@@ -104,7 +67,6 @@ public class Pizza {
     public void removeRightTopping(Topping topping) {
         this.rightHalf.removeTopping(topping);
     }
-
 
     public Sauce getSauce() {
         return sauce;
