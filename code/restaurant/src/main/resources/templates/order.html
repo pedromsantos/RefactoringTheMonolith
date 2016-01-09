@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Monolito's Pizza</title>
+</head>
+<body>
+<p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<h1>New Pizza Order</h1>
+</body>
+</html>

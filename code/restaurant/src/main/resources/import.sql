@@ -1,0 +1,5 @@
+insert into ROLE(ID,NAME) values (1, 'USER');
+
+insert into CUSTOMER(ID, ACCOUNT_NON_EXPIRED, ACCOUNT_NON_LOCKED, CREDENTIALS_NON_EXPIRED, EMAIL, ENABLED, NAME, PASSWORD, PHONE) values (10000, TRUE, TRUE, TRUE, 'rey@theresistance.com', TRUE, 'Rey', 'password', '+1(999)999-9999)');
+
+insert into CUSTOMER_ROLES(CUSTOMER_ID, ROLES_ID) values (10000, 1);
