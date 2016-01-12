@@ -51,6 +51,7 @@ public class OrderControllerMvcTest {
         this.mockMvc.perform(get("/addPizza?orderId=10000"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("basePizzaMenuOptions"))
+                .andExpect(model().attributeExists("currentPizza"))
                 .andExpect(view().name("chooseBaseOptions"));
     }
 }

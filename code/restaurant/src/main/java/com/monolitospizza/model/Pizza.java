@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import static org.springframework.util.Assert.notNull;
+
 /**
  * @author Matt Stine
  */
@@ -23,6 +25,9 @@ public class Pizza {
     private Half rightHalf;
     @OneToOne
     private Sauce sauce;
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
 
     private Pizza() {
         leftHalf = new Half();
@@ -108,5 +113,14 @@ public class Pizza {
     @Override
     public int hashCode() {
         return Objects.hash(size, crust, leftHalf, rightHalf, sauce);
+    }
+
+    public void setOrder(Order order) {
+        notNull(order);
+        this.order = order;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 }

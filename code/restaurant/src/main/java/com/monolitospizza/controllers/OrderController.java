@@ -27,7 +27,9 @@ public class OrderController {
     @RequestMapping("/addPizza")
     public String startNewPizza(@RequestParam(name = "orderId") long orderId, ModelMap modelMap) {
         modelMap.addAttribute("basePizzaMenuOptions", menuService.loadBasePizzaMenuOptions());
-        modelMap.addAttribute("currentPizza", menuService.loadDefaultPizzaConfiguration());
+        Pizza currentPizza = menuService.loadDefaultPizzaConfiguration();
+        currentPizza.setOrder(orderService.loadOrder(orderId));
+        modelMap.addAttribute("currentPizza", currentPizza);
         return "chooseBaseOptions";
     }
 

@@ -18,3 +18,5 @@ insert into SAUCE(ID, NAME) values (10000, 'Normal');
 insert into SAUCE(ID, NAME) values (10001, 'Light');
 insert into SAUCE(ID, NAME) values (10002, 'None');
 insert into SAUCE(ID, NAME) values (10003, 'Heavy');
+
+insert into ORDERS(ID, TYPE, CUSTOMER_ID) values (10000, 0, 10000);

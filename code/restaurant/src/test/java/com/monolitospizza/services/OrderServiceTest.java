@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -59,5 +60,16 @@ public class OrderServiceTest {
         assertThat(result, is(equalTo(expectedResult)));
         verify(mockCustomerRepository).findOne(1L);
         verify(mockOrderRepository).save(expectedResult);
+    }
+
+    @Test
+    public void loadsAnOrderByItsId() {
+        Order expectedOrder = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+        when(mockOrderRepository.findOne(1L))
+                .thenReturn(expectedOrder);
+
+        Order actualOrder = orderService.loadOrder(1L);
+        assertThat(actualOrder, is(equalTo(expectedOrder)));
     }
 }

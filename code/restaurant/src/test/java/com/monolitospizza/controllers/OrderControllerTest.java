@@ -70,11 +70,15 @@ public class OrderControllerTest {
         Pizza defaultPizzaConfiguration = new Pizza(new Size("Large", BigDecimal.ZERO),
                 new Crust("Thin"),
                 new Sauce("Normal"));
+        Order order = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
 
         when(mockMenuService.loadBasePizzaMenuOptions())
                 .thenReturn(basePizzaMenuOptions);
         when(mockMenuService.loadDefaultPizzaConfiguration())
                 .thenReturn(defaultPizzaConfiguration);
+        when(mockOrderService.loadOrder(1L))
+                .thenReturn(order);
 
         ModelMap modelMap = new ModelMap();
 
@@ -82,8 +86,11 @@ public class OrderControllerTest {
 
         verify(mockMenuService).loadBasePizzaMenuOptions();
         verify(mockMenuService).loadDefaultPizzaConfiguration();
+        verify(mockOrderService).loadOrder(1L);
         assertThat(view, is(equalTo("chooseBaseOptions")));
         assertThat(modelMap.get("basePizzaMenuOptions"), is(equalTo(basePizzaMenuOptions)));
+
+        defaultPizzaConfiguration.setOrder(order);
         assertThat(modelMap.get("currentPizza"), is(equalTo(defaultPizzaConfiguration)));
     }
 

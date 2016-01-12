@@ -32,4 +32,8 @@ public class OrderService {
         orderRepository.save(order);
         return order;
     }
+
+    public Order loadOrder(long orderId) {
+        return orderRepository.findOne(orderId);
+    }
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -104,6 +105,19 @@ public class PizzaTest {
                         .add(new Topping("Onion", BigDecimal.valueOf(0.5)).getPrice());
 
         assertThat(pizza.getPrice(), equalTo(expectedPrice));
+    }
+
+    @Test
+    public void canSpecifyAPizzasOrder() {
+        Order order = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+        pizza.setOrder(order);
+        assertThat(pizza.getOrder(), is(equalTo(order)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cantExplicitlySetAPizzasOrderToNull() {
+        pizza.setOrder(null);
     }
 
 }

@@ -19,13 +19,16 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<Pizza> pizzas = new ArrayList<>();
     private OrderType type;
 
     @OneToOne
     @JoinColumn(name="CUSTOMER_ID")
     private Customer customer;
+
+    private Order() {
+    }
 
     public Order(OrderType type, Customer customer) {
         notNull(customer);
