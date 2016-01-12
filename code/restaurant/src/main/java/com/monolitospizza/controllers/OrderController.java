@@ -1,6 +1,7 @@
 package com.monolitospizza.controllers;
 
 import com.monolitospizza.services.MenuService;
+import com.monolitospizza.services.OrderService;
 import org.springframework.ui.ModelMap;
 
 /**
@@ -8,9 +9,11 @@ import org.springframework.ui.ModelMap;
  */
 public class OrderController {
 
-    private MenuService menuService;
+    private final OrderService orderService;
+    private final MenuService menuService;
 
-    public OrderController(MenuService menuService) {
+    public OrderController(OrderService orderService, MenuService menuService) {
+        this.orderService = orderService;
         this.menuService = menuService;
     }
 
@@ -18,5 +21,11 @@ public class OrderController {
         modelMap.addAttribute("basePizzaMenuOptions", menuService.loadBasePizzaMenuOptions());
 
         return "chooseBaseOptions";
+    }
+
+    public String startNewPickupOrder(long customerId, ModelMap modelMap) {
+        modelMap.addAttribute("currentOrder", orderService.startNewPickupOrder(customerId));
+
+        return "addAPizza";
     }
 }

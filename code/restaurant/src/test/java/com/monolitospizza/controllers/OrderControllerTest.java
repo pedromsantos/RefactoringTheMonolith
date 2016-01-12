@@ -1,10 +1,10 @@
 package com.monolitospizza.controllers;
 
-import com.monolitospizza.model.Crust;
-import com.monolitospizza.model.Sauce;
-import com.monolitospizza.model.Size;
+import com.monolitospizza.model.*;
 import com.monolitospizza.services.BasePizzaMenuOptions;
 import com.monolitospizza.services.MenuService;
+import com.monolitospizza.services.OrderService;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -23,15 +23,38 @@ import static org.mockito.Mockito.*;
  */
 public class OrderControllerTest {
 
+    private MenuService mockMenuService;
+    private OrderController orderController;
+    private OrderService mockOrderService;
+
+    @Before
+    public void setUp() throws Exception {
+        mockOrderService = mock(OrderService.class);
+        mockMenuService = mock(MenuService.class);
+
+        orderController = new OrderController(mockOrderService, mockMenuService);
+    }
+
+    @Test
+    public void startsANewPickupOrder() {
+        Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
+        Order order = new Order(OrderType.FOR_PICKUP, customer);
+        when(mockOrderService.startNewPickupOrder(1L)).thenReturn(order);
+        ModelMap modelMap = new ModelMap();
+
+        String view = orderController.startNewPickupOrder(1L, modelMap);
+
+        assertThat(view, is(equalTo("addAPizza")));
+        assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
+    }
+
     @Test
     public void shouldLoadBaseOptionsForNewPizza() {
-        MenuService mockMenuService = mock(MenuService.class);
         BasePizzaMenuOptions basePizzaMenuOptions = new BasePizzaMenuOptions(Arrays.asList(new Size("Large", BigDecimal.ZERO)),
                 Arrays.asList(new Crust("Thin")),
                 Arrays.asList(new Sauce("Normal")));
         when(mockMenuService.loadBasePizzaMenuOptions())
                 .thenReturn(basePizzaMenuOptions);
-        OrderController orderController = new OrderController(mockMenuService);
         ModelMap modelMap = new ModelMap();
 
         String view = orderController.startNewPizza(modelMap);
