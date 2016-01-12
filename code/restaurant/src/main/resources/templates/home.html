@@ -8,8 +8,8 @@
 
 <h2>Place a New Order:</h2>
 <ul>
-    <li><a th:href="@{/order?type=delivery}">Delivery</a></li>
-    <li><a th:href="@{/order?type=carryout}">Pickup</a></li>
+    <li><a th:href="@{/deliveryOrder(customerId=${currentCustomer.id})}">Delivery</a></li>
+    <li><a th:href="@{/pickupOrder(customerId=${currentCustomer.id})}">Pickup</a></li>
 </ul>
 </body>
 </html>
