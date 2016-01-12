@@ -22,4 +22,10 @@ public class OrderService {
         orderRepository.save(order);
         return order;
     }
+
+    public Order startNewDeliveryOrder(long customerId) {
+        Order order = new Order(OrderType.FOR_DELIVERY, customerRepository.findOne(1L));
+        orderRepository.save(order);
+        return order;
+    }
 }

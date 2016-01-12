@@ -19,13 +19,16 @@ public class OrderController {
 
     public String startNewPizza(ModelMap modelMap) {
         modelMap.addAttribute("basePizzaMenuOptions", menuService.loadBasePizzaMenuOptions());
-
         return "chooseBaseOptions";
     }
 
     public String startNewPickupOrder(long customerId, ModelMap modelMap) {
         modelMap.addAttribute("currentOrder", orderService.startNewPickupOrder(customerId));
+        return "addAPizza";
+    }
 
+    public String startNewDeliveryOrder(long customerId, ModelMap modelMap) {
+        modelMap.addAttribute("currentOrder", orderService.startNewDeliveryOrder(customerId));
         return "addAPizza";
     }
 }

@@ -26,6 +26,7 @@ public class OrderControllerTest {
     private MenuService mockMenuService;
     private OrderController orderController;
     private OrderService mockOrderService;
+    private Customer customer;
 
     @Before
     public void setUp() throws Exception {
@@ -33,16 +34,29 @@ public class OrderControllerTest {
         mockMenuService = mock(MenuService.class);
 
         orderController = new OrderController(mockOrderService, mockMenuService);
+        customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
     }
 
     @Test
     public void startsANewPickupOrder() {
-        Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
         Order order = new Order(OrderType.FOR_PICKUP, customer);
         when(mockOrderService.startNewPickupOrder(1L)).thenReturn(order);
         ModelMap modelMap = new ModelMap();
 
         String view = orderController.startNewPickupOrder(1L, modelMap);
+
+        assertThat(view, is(equalTo("addAPizza")));
+        assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
+    }
+
+    @Test
+    public void startsANewDeliveryOrder() {
+        customer.setAddress(new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
+        Order order = new Order(OrderType.FOR_DELIVERY, customer);
+        when(mockOrderService.startNewDeliveryOrder(1L)).thenReturn(order);
+        ModelMap modelMap = new ModelMap();
+
+        String view = orderController.startNewDeliveryOrder(1L, modelMap);
 
         assertThat(view, is(equalTo("addAPizza")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
