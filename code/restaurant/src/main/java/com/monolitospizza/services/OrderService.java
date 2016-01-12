@@ -2,8 +2,10 @@ package com.monolitospizza.services;
 
 import com.monolitospizza.model.Order;
 import com.monolitospizza.model.OrderType;
+import com.monolitospizza.model.Pizza;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
+import com.monolitospizza.repositories.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,13 @@ import org.springframework.stereotype.Service;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
+    private final PizzaRepository pizzaRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository) {
+    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, PizzaRepository pizzaRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
+        this.pizzaRepository = pizzaRepository;
     }
 
     public Order startNewPickupOrder(long customerId) {
@@ -35,5 +39,9 @@ public class OrderService {
 
     public Order loadOrder(long orderId) {
         return orderRepository.findOne(orderId);
+    }
+
+    public void updatePizza(Pizza pizza) {
+        pizzaRepository.save(pizza);
     }
 }

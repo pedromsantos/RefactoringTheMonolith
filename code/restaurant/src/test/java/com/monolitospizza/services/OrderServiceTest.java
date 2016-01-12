@@ -1,13 +1,13 @@
 package com.monolitospizza.services;
 
-import com.monolitospizza.model.Address;
-import com.monolitospizza.model.Customer;
-import com.monolitospizza.model.Order;
-import com.monolitospizza.model.OrderType;
+import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
+import com.monolitospizza.repositories.PizzaRepository;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -25,12 +25,14 @@ public class OrderServiceTest {
     private OrderRepository mockOrderRepository;
     private CustomerRepository mockCustomerRepository;
     private OrderService orderService;
+    private PizzaRepository mockPizzaRepository;
 
     @Before
     public void setUp() throws Exception {
         mockOrderRepository = mock(OrderRepository.class);
         mockCustomerRepository = mock(CustomerRepository.class);
-        orderService = new OrderService(mockOrderRepository, mockCustomerRepository);
+        mockPizzaRepository = mock(PizzaRepository.class);
+        orderService = new OrderService(mockOrderRepository, mockCustomerRepository, mockPizzaRepository);
     }
 
     @Test
@@ -71,5 +73,19 @@ public class OrderServiceTest {
 
         Order actualOrder = orderService.loadOrder(1L);
         assertThat(actualOrder, is(equalTo(expectedOrder)));
+    }
+
+    @Test
+    public void updatesPizza() {
+        Pizza pizza = new Pizza(new Size("Large", BigDecimal.ZERO),
+                new Crust("Thin"),
+                new Sauce("Normal"));
+        Order order = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+        pizza.setOrder(order);
+
+        orderService.updatePizza(pizza);
+
+        verify(mockPizzaRepository).save(pizza);
     }
 }
