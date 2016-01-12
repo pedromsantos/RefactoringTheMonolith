@@ -31,6 +31,10 @@
                     th:text="${sauce.name}">Some Sauce</option>
         </select>
     </p>
+    <p>
+        <button type="submit">Choose Toppings</button>
+    </p>
+    <input type="hidden" th:field="*{order}" th:value="${order}"/>
 </form>
 </body>
 </html>
