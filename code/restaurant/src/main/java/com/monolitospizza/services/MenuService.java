@@ -6,15 +6,19 @@ import com.monolitospizza.model.Size;
 import com.monolitospizza.repositories.CrustRepository;
 import com.monolitospizza.repositories.SauceRepository;
 import com.monolitospizza.repositories.SizeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Matt Stine
  */
+@Service
 public class MenuService {
     private final SizeRepository sizeRepository;
     private final CrustRepository crustRepository;
     private final SauceRepository sauceRepository;
 
+    @Autowired
     public MenuService(SizeRepository sizeRepository, CrustRepository crustRepository, SauceRepository sauceRepository) {
         this.sizeRepository = sizeRepository;
         this.crustRepository = crustRepository;

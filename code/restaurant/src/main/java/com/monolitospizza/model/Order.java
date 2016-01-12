@@ -28,6 +28,7 @@ public class Order {
     private Customer customer;
 
     public Order(OrderType type, Customer customer) {
+        notNull(customer);
         if (type == OrderType.FOR_DELIVERY) {
             notNull(customer.getAddress());
         }

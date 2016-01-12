@@ -91,7 +91,12 @@ public class OrderTest {
     }
 
     @Test
-    public void orderMustHaveACustomer() {
+    public void orderKeepsItsCustomer() {
         assertThat(order.getCustomer(), is(notNullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void orderMustHaveACustomer() {
+        new Order(OrderType.FOR_DELIVERY, null);
     }
 }

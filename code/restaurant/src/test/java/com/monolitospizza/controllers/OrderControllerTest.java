@@ -71,7 +71,7 @@ public class OrderControllerTest {
                 .thenReturn(basePizzaMenuOptions);
         ModelMap modelMap = new ModelMap();
 
-        String view = orderController.startNewPizza(modelMap);
+        String view = orderController.startNewPizza(1L, modelMap);
 
         verify(mockMenuService).loadBasePizzaMenuOptions();
         assertThat(view, is(equalTo("chooseBaseOptions")));

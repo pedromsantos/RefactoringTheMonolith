@@ -19,6 +19,9 @@ public class Address {
     private String state;
     private String postalCode;
 
+    private Address() {
+    }
+
     public Address(String streetAddress, String city, String state, String postalCode) {
         this.streetAddress = streetAddress;
         this.city = city;
