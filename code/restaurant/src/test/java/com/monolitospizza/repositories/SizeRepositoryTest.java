@@ -30,4 +30,10 @@ public class SizeRepositoryTest {
         size = sizeRepository.save(size);
         assertThat(size.getId(), is(notNullValue()));
     }
+
+    @Test
+    public void canFindByName() {
+        Size size = sizeRepository.findOneByName("Large");
+        assertThat(size, is(notNullValue()));
+    }
 }

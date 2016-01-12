@@ -1,6 +1,7 @@
 package com.monolitospizza.services;
 
 import com.monolitospizza.model.Crust;
+import com.monolitospizza.model.Pizza;
 import com.monolitospizza.model.Sauce;
 import com.monolitospizza.model.Size;
 import com.monolitospizza.repositories.CrustRepository;
@@ -31,5 +32,11 @@ public class MenuService {
         Iterable<Sauce> sauces = sauceRepository.findAll();
 
         return new BasePizzaMenuOptions(sizes, crusts, sauces);
+    }
+
+    public Pizza loadDefaultPizzaConfiguration() {
+        return new Pizza(sizeRepository.findOneByName("Large"),
+                crustRepository.findOneByName("Thin"),
+                sauceRepository.findOneByName("Normal"));
     }
 }

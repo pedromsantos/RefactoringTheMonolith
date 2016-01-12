@@ -1,5 +1,6 @@
 package com.monolitospizza.controllers;
 
+import com.monolitospizza.model.Pizza;
 import com.monolitospizza.services.MenuService;
 import com.monolitospizza.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,19 @@ public class OrderController {
     @RequestMapping("/addPizza")
     public String startNewPizza(@RequestParam(name = "orderId") long orderId, ModelMap modelMap) {
         modelMap.addAttribute("basePizzaMenuOptions", menuService.loadBasePizzaMenuOptions());
+        modelMap.addAttribute("currentPizza", menuService.loadDefaultPizzaConfiguration());
         return "chooseBaseOptions";
     }
 
     @RequestMapping("/pickupOrder")
     public String startNewPickupOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap) {
         modelMap.addAttribute("currentOrder", orderService.startNewPickupOrder(customerId));
-        return "addAPizza";
+        return "order";
     }
 
     @RequestMapping("/deliveryOrder")
     public String startNewDeliveryOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap) {
         modelMap.addAttribute("currentOrder", orderService.startNewDeliveryOrder(customerId));
-        return "addAPizza";
+        return "order";
     }
 }

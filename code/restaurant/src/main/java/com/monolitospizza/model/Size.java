@@ -18,6 +18,8 @@ public class Size {
     private String name;
     private BigDecimal price;
 
+    private Size() {
+    }
 
     public Size(String name, BigDecimal price) {
         this.name = name;

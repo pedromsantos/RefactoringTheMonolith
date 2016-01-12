@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -29,5 +30,9 @@ public class SauceRepositoryTest {
         assertThat(sauce.getId(), is(notNullValue()));
     }
 
-
+    @Test
+    public void canFindByName() {
+        Sauce sauce = sauceRepository.findOneByName("Normal");
+        assertThat(sauce, is(equalTo(new Sauce("Normal"))));
+    }
 }

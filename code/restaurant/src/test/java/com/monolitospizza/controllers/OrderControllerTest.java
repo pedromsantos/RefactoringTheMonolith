@@ -45,7 +45,7 @@ public class OrderControllerTest {
 
         String view = orderController.startNewPickupOrder(1L, modelMap);
 
-        assertThat(view, is(equalTo("addAPizza")));
+        assertThat(view, is(equalTo("order")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
     }
 
@@ -58,7 +58,7 @@ public class OrderControllerTest {
 
         String view = orderController.startNewDeliveryOrder(1L, modelMap);
 
-        assertThat(view, is(equalTo("addAPizza")));
+        assertThat(view, is(equalTo("order")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
     }
 
@@ -67,15 +67,24 @@ public class OrderControllerTest {
         BasePizzaMenuOptions basePizzaMenuOptions = new BasePizzaMenuOptions(Arrays.asList(new Size("Large", BigDecimal.ZERO)),
                 Arrays.asList(new Crust("Thin")),
                 Arrays.asList(new Sauce("Normal")));
+        Pizza defaultPizzaConfiguration = new Pizza(new Size("Large", BigDecimal.ZERO),
+                new Crust("Thin"),
+                new Sauce("Normal"));
+
         when(mockMenuService.loadBasePizzaMenuOptions())
                 .thenReturn(basePizzaMenuOptions);
+        when(mockMenuService.loadDefaultPizzaConfiguration())
+                .thenReturn(defaultPizzaConfiguration);
+
         ModelMap modelMap = new ModelMap();
 
         String view = orderController.startNewPizza(1L, modelMap);
 
         verify(mockMenuService).loadBasePizzaMenuOptions();
+        verify(mockMenuService).loadDefaultPizzaConfiguration();
         assertThat(view, is(equalTo("chooseBaseOptions")));
         assertThat(modelMap.get("basePizzaMenuOptions"), is(equalTo(basePizzaMenuOptions)));
+        assertThat(modelMap.get("currentPizza"), is(equalTo(defaultPizzaConfiguration)));
     }
 
 }

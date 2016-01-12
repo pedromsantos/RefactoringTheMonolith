@@ -5,5 +5,32 @@
 </head>
 <body>
 <h1>Choose Size / Crust / Sauce</h1>
+
+<form action="#" th:action="@{/chooseToppings}" th:object="${currentPizza}" method="post">
+    <p>
+        <label th:for="${size}">Size</label>
+        <select th:field="*{size}">
+            <option th:each="size : ${basePizzaMenuOptions.sizes}"
+                    th:value="${size.id}"
+                    th:text="${size.name}">Some Size</option>
+        </select>
+    </p>
+    <p>
+        <label th:for="${crust}">Crust</label>
+        <select th:field="*{crust}">
+            <option th:each="crust : ${basePizzaMenuOptions.crusts}"
+                    th:value="${crust.id}"
+                    th:text="${crust.name}">Some Crust</option>
+        </select>
+    </p>
+    <p>
+        <label th:for="${sauce}">Sauce</label>
+        <select th:field="*{sauce}">
+            <option th:each="sauce : ${basePizzaMenuOptions.sauces}"
+                    th:value="${sauce.id}"
+                    th:text="${sauce.name}">Some Sauce</option>
+        </select>
+    </p>
+</form>
 </body>
 </html>

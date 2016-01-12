@@ -7,4 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Matt Stine
  */
 public interface SizeRepository extends PagingAndSortingRepository<Size, Long> {
+    Size findOneByName(String name);
 }

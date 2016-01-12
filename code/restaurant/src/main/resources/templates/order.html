@@ -8,6 +8,8 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
-<h1>New Pizza Order</h1>
+<h1>My Pizza Order</h1>
+
+<a th:href="@{/addPizza(orderId=${currentOrder.id})}">Add a Pizza</a>
 </body>
 </html>

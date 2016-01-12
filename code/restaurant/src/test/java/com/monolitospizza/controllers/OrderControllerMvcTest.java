@@ -35,7 +35,7 @@ public class OrderControllerMvcTest {
         this.mockMvc.perform(get("/pickupOrder?customerId=10000"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("currentOrder"))
-                .andExpect(view().name("addAPizza"));
+                .andExpect(view().name("order"));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class OrderControllerMvcTest {
         this.mockMvc.perform(get("/deliveryOrder?customerId=10000"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("currentOrder"))
-                .andExpect(view().name("addAPizza"));
+                .andExpect(view().name("order"));
     }
 
     @Test

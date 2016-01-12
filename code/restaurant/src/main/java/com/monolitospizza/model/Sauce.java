@@ -11,17 +11,24 @@ import java.util.Objects;
 @Entity
 public class Sauce {
 
-    private String normal;
+    private String name;
     @Id
     @GeneratedValue
     private Long id;
 
-    public Sauce(String normal) {
-           this.normal = normal;
+    private Sauce() {
+    }
+
+    public Sauce(String name) {
+           this.name = name;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -29,11 +36,11 @@ public class Sauce {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sauce sauce = (Sauce) o;
-        return Objects.equals(normal, sauce.normal);
+        return Objects.equals(name, sauce.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(normal);
+        return Objects.hash(name);
     }
 }

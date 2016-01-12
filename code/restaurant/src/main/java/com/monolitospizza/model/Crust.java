@@ -16,6 +16,9 @@ public class Crust {
     @GeneratedValue
     private Long id;
 
+    private Crust() {
+    }
+
     public Crust(String name) {
         this.name = name;
     }
