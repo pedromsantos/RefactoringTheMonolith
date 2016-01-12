@@ -28,7 +28,7 @@ public class OrderRepositoryTest {
     private CustomerRepository customerRepository;
 
     @Test
-    public void canSaveACustomer() {
+    public void canSaveAnOrder() {
         Customer customer = customerRepository.findOne(10000L);
         Order order = new Order(OrderType.FOR_PICKUP, customer);
 
