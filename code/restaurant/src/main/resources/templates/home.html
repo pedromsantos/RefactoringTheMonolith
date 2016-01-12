@@ -6,6 +6,10 @@
 <body>
 <h1>Welcome to Monolito's Pizza!</h1>
 
-<p>Click <a th:href="@{/order}">here</a> to place an order.</p>
+<h2>Place a New Order:</h2>
+<ul>
+    <li><a th:href="@{/order?type=delivery}">Delivery</a></li>
+    <li><a th:href="@{/order?type=carryout}">Pickup</a></li>
+</ul>
 </body>
 </html>
