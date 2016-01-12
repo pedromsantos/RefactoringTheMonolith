@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -97,5 +98,27 @@ public class Customer implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return accountNonExpired == customer.accountNonExpired &&
+                accountNonLocked == customer.accountNonLocked &&
+                credentialsNonExpired == customer.credentialsNonExpired &&
+                enabled == customer.enabled &&
+                Objects.equals(name, customer.name) &&
+                Objects.equals(email, customer.email) &&
+                Objects.equals(phone, customer.phone) &&
+                Objects.equals(address, customer.address) &&
+                Objects.equals(roles, customer.roles) &&
+                Objects.equals(password, customer.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, phone, address, roles, password, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
     }
 }

@@ -4,6 +4,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -31,5 +32,18 @@ public class Half {
                 .stream()
                 .map(Topping::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Half half = (Half) o;
+        return Objects.equals(toppings, half.toppings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(toppings);
     }
 }
