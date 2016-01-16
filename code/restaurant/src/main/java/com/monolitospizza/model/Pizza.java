@@ -126,4 +126,20 @@ public class Pizza {
     public Order getOrder() {
         return order;
     }
+
+    public boolean containsTopping(Topping topping) {
+        return leftHalf.containsTopping(topping) || rightHalf.containsTopping(topping);
+    }
+
+    public boolean leftHalfContainsTopping(Topping topping) {
+        return leftHalf.containsTopping(topping);
+    }
+
+    public boolean rightHalfContainsTopping(Topping topping) {
+        return rightHalf.containsTopping(topping);
+    }
+
+    public boolean wholePizzaContainsTopping(Topping topping) {
+        return leftHalfContainsTopping(topping) && rightHalfContainsTopping(topping);
+    }
 }

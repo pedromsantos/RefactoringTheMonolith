@@ -20,3 +20,14 @@ insert into SAUCE(ID, NAME) values (10002, 'None');
 insert into SAUCE(ID, NAME) values (10003, 'Heavy');
 
 insert into ORDERS(ID, TYPE, CUSTOMER_ID) values (10000, 0, 10000);
+
+insert into TOPPING(ID, NAME, PRICE) values (10000, 'Sausage', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10001, 'Pepperoni', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10002, 'Ham', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10003, 'Beef', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10004, 'Bacon', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10005, 'Mushroom', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10006, 'Onion', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10007, 'Bell Pepper', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10008, 'Green Olive', 0.5);
+insert into TOPPING(ID, NAME, PRICE) values (10009, 'Black Olive', 0.5);

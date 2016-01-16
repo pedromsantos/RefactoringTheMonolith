@@ -52,6 +52,8 @@ public class OrderController {
         Order currentOrder = orderService.loadOrder(currentPizza.getOrder().getId());
         currentPizza.setOrder(currentOrder);
         orderService.updatePizza(currentPizza);
+
+        modelMap.addAttribute("toppingOptions", menuService.loadToppingOptions());
         return "chooseToppings";
     }
 }

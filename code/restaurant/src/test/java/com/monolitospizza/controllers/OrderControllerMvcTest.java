@@ -63,6 +63,7 @@ public class OrderControllerMvcTest {
                 .param("sauce", "10000")
                 .param("order", "10000"))
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("toppingOptions"))
                 .andExpect(view().name("chooseToppings"));
 
     }

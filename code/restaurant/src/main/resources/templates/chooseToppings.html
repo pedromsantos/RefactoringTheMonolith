@@ -5,5 +5,37 @@
 </head>
 <body>
 <h1>Choose Toppings</h1>
+<table>
+    <thead>
+    <tr>
+        <td><label th:for="${topping}">Topping</label></td>
+        <td><select id="topping">
+            <option th:each="topping : ${toppingOptions}"
+                    th:value="${topping.id}"
+                    th:text="${topping.name}">Some Topping</option>
+            </select>
+        </td>
+        <td><label th:for="${half}">Where?</label></td>
+        <td><select id="half">
+            <option value="whole">Whole Pizza</option>
+            <option value="left">Left Half</option>
+            <option value="right">Right Half</option>
+            </select>
+        </td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td></td>
+        <td>Sausage</td>
+        <td></td>
+        <td>Whole Pizza</td>
+        <td><button type="submit">Remove</button></td>
+    </tr>
+    </tbody>
+</table>
+<p><button type="submit">Add Another Pizza</button></p>
+<p><button type="submit">Finalize Order</button></p>
 </body>
 </html>

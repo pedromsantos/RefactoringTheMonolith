@@ -107,6 +107,12 @@ public class OrderControllerTest {
         when(mockOrderService.loadOrder(1L))
                 .thenReturn(currentOrder);
 
+        Iterable<Topping> expectedToppings = Arrays.asList(new Topping("Sausage", BigDecimal.ZERO),
+                new Topping("Onion", BigDecimal.ZERO),
+                new Topping("Bell Pepper", BigDecimal.ZERO));
+        when(mockMenuService.loadToppingOptions())
+                .thenReturn(expectedToppings);
+
         ModelMap modelMap = new ModelMap();
 
         String view = orderController.updatePizzaAndChooseToppings(currentPizza, modelMap);
@@ -119,6 +125,8 @@ public class OrderControllerTest {
         expectedUpdatePizza.setOrder(currentOrder);
 
         verify(mockOrderService).updatePizza(expectedUpdatePizza);
+        verify(mockMenuService).loadToppingOptions();
+        assertThat(modelMap.get("toppingOptions"), is(equalTo(expectedToppings)));
         assertThat(view, is(equalTo("chooseToppings")));
     }
 

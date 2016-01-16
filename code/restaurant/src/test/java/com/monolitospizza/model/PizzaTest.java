@@ -120,4 +120,52 @@ public class PizzaTest {
         pizza.setOrder(null);
     }
 
+    @Test
+    public void pizzaKnowsIfItContainsATopping() {
+        pizza.addLeftTopping(sausage);
+
+        assertThat(pizza.containsTopping(sausage), is(true));
+    }
+
+    @Test
+    public void pizzaKnowsIfItDoesNotContainATopping() {
+        assertThat(pizza.containsTopping(sausage), is(false));
+    }
+
+    @Test
+    public void pizzaKnowsIfLeftHalfContainsATopping() {
+        pizza.addLeftTopping(sausage);
+
+        assertThat(pizza.leftHalfContainsTopping(sausage), is(true));
+    }
+
+    @Test
+    public void pizzaKnowsIfLeftHalfDoesNotContainATopping() {
+        assertThat(pizza.leftHalfContainsTopping(sausage), is(false));
+    }
+
+    @Test
+    public void pizzaKnowsIfRightHalfContainsATopping() {
+        pizza.addRightTopping(sausage);
+
+        assertThat(pizza.rightHalfContainsTopping(sausage), is(true));
+    }
+
+    @Test
+    public void pizzaKnowsIfRightHalfDoesNotContainATopping() {
+        assertThat(pizza.rightHalfContainsTopping(sausage), is(false));
+    }
+
+    @Test
+    public void pizzaKnowsIfWholeContainsATopping() {
+        pizza.addTopping(sausage);
+
+        assertThat(pizza.wholePizzaContainsTopping(sausage), is(true));
+    }
+
+    @Test
+    public void pizzaKnowsIfWholeDoesNotContainATopping() {
+        assertThat(pizza.wholePizzaContainsTopping(sausage), is(false));
+    }
+
 }

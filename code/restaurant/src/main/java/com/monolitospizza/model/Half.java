@@ -47,4 +47,8 @@ public class Half {
     public int hashCode() {
         return Objects.hash(toppings);
     }
+
+    public boolean containsTopping(Topping topping) {
+        return this.toppings.contains(topping);
+    }
 }

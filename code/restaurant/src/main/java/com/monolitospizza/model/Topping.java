@@ -18,6 +18,9 @@ public class Topping {
     private BigDecimal price;
     private String name;
 
+    private Topping() {
+    }
+
     public Topping(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
@@ -46,5 +49,13 @@ public class Topping {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Topping{" +
+                "price=" + price +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

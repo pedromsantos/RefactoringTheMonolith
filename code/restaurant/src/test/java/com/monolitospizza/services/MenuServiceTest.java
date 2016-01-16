@@ -1,12 +1,10 @@
 package com.monolitospizza.services;
 
-import com.monolitospizza.model.Crust;
-import com.monolitospizza.model.Pizza;
-import com.monolitospizza.model.Sauce;
-import com.monolitospizza.model.Size;
+import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CrustRepository;
 import com.monolitospizza.repositories.SauceRepository;
 import com.monolitospizza.repositories.SizeRepository;
+import com.monolitospizza.repositories.ToppingRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +13,6 @@ import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -28,6 +25,7 @@ public class MenuServiceTest {
     private CrustRepository mockCrustRepository;
     private SauceRepository mockSauceRepository;
     private SizeRepository mockSizeRepository;
+    private ToppingRepository mockToppingRepository;
     private MenuService menuService;
 
     @Before
@@ -35,9 +33,11 @@ public class MenuServiceTest {
         mockCrustRepository = mock(CrustRepository.class);
         mockSauceRepository = mock(SauceRepository.class);
         mockSizeRepository = mock(SizeRepository.class);
+        mockToppingRepository = mock(ToppingRepository.class);
         menuService = new MenuService(mockSizeRepository,
                 mockCrustRepository,
-                mockSauceRepository);
+                mockSauceRepository,
+                mockToppingRepository);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class MenuServiceTest {
         when(mockSauceRepository.findAll())
                 .thenReturn(Arrays.asList(new Sauce("Normal")));
 
-        BasePizzaMenuOptions baseMenuOptions =  menuService.loadBasePizzaMenuOptions();
+        BasePizzaMenuOptions baseMenuOptions = menuService.loadBasePizzaMenuOptions();
 
         assertThat(baseMenuOptions.getSizes().iterator().hasNext(), is(true));
         assertThat(baseMenuOptions.getCrusts().iterator().hasNext(), is(true));
@@ -72,5 +72,20 @@ public class MenuServiceTest {
         assertThat(pizza.getSize(), is(equalTo(new Size("Large", BigDecimal.ZERO))));
         assertThat(pizza.getCrust(), is(equalTo(new Crust("Thin"))));
         assertThat(pizza.getSauce(), is(equalTo(new Sauce("Normal"))));
+    }
+
+    @Test
+    public void shouldLoadToppingOptions() {
+        Iterable<Topping> expectedToppings = Arrays.asList(new Topping("Sausage", BigDecimal.ZERO),
+                new Topping("Onion", BigDecimal.ZERO),
+                new Topping("Bell Pepper", BigDecimal.ZERO));
+
+        when(mockToppingRepository.findAll())
+                .thenReturn(expectedToppings);
+
+
+        Iterable<Topping> toppings = menuService.loadToppingOptions();
+
+        assertThat(toppings, is(equalTo(expectedToppings)));
     }
 }
