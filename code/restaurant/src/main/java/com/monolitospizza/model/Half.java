@@ -1,8 +1,6 @@
 package com.monolitospizza.model;
 
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,10 +9,18 @@ import java.util.Set;
 /**
  * @author Matt Stine
  */
-@Embeddable
+@Entity
 public class Half {
-    @OneToMany(fetch = FetchType.EAGER)
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Topping> toppings = new HashSet<>();
+
+    public Long getId() {
+        return id;
+    }
 
     public Set<Topping> getToppings() {
         return toppings;

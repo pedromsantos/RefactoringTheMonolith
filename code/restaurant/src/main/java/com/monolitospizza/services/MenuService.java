@@ -43,4 +43,8 @@ public class MenuService {
     public Iterable<Topping> loadToppingOptions() {
         return toppingRepository.findAll();
     }
+
+    public Topping loadTopping(long id) {
+        return toppingRepository.findOne(id);
+    }
 }

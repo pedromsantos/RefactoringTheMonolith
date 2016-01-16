@@ -16,6 +16,14 @@ public class ChooseToppingsViewHelperLineItem {
         this.location = location;
     }
 
+    public Topping getTopping() {
+        return topping;
+    }
+
+    public ChooseToppingsViewHelperLocation getLocation() {
+        return location;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

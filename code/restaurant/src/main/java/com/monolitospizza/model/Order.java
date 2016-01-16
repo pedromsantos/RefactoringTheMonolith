@@ -19,7 +19,7 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Pizza> pizzas = new ArrayList<>();
     private OrderType type;
 

@@ -44,4 +44,12 @@ public class OrderService {
     public void updatePizza(Pizza pizza) {
         pizzaRepository.save(pizza);
     }
+
+    public Pizza loadPizza(Long pizzaId) {
+        return pizzaRepository.findOne(pizzaId);
+    }
+
+    public void updateOrder(Order currentOrder) {
+        orderRepository.save(currentOrder);
+    }
 }

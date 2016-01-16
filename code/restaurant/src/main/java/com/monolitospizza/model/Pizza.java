@@ -1,8 +1,5 @@
 package com.monolitospizza.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -22,9 +19,9 @@ public class Pizza {
     private Size size;
     @OneToOne
     private Crust crust;
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
     private Half leftHalf;
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
     private Half rightHalf;
     @OneToOne
     private Sauce sauce;
@@ -141,5 +138,17 @@ public class Pizza {
 
     public boolean wholePizzaContainsTopping(Topping topping) {
         return leftHalfContainsTopping(topping) && rightHalfContainsTopping(topping);
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public void setCrust(Crust crust) {
+        this.crust = crust;
+    }
+
+    public void setSauce(Sauce sauce) {
+        this.sauce = sauce;
     }
 }

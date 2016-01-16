@@ -88,4 +88,13 @@ public class MenuServiceTest {
 
         assertThat(toppings, is(equalTo(expectedToppings)));
     }
+
+    @Test
+    public void shouldLoadTopping() {
+        Topping sausage = new Topping("Sausage", BigDecimal.ZERO);
+        when(mockToppingRepository.findOne(1L))
+                .thenReturn(sausage);
+        Topping topping = menuService.loadTopping(1L);
+        assertThat(topping, is(equalTo(sausage)));
+    }
 }

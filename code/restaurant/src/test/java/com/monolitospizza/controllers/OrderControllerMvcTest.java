@@ -1,6 +1,7 @@
 package com.monolitospizza.controllers;
 
 import com.monolitospizza.RestaurantApplication;
+import com.monolitospizza.helpers.ChooseToppingsViewHelperLocation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,8 +64,18 @@ public class OrderControllerMvcTest {
                 .param("sauce", "10000")
                 .param("order", "10000"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("toppingOptions"))
+                .andExpect(model().attributeExists("helper"))
                 .andExpect(view().name("chooseToppings"));
+    }
 
+    @Test
+    public void shouldAddToppingToWholePizzaAndLoadToppingOptions() throws Exception {
+        this.mockMvc.perform(post("/addTopping")
+                .param("topping", "10000")
+                .param("location", ChooseToppingsViewHelperLocation.WHOLE.toString())
+                .param("pizza", "10000"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("helper"))
+                .andExpect(view().name("chooseToppings"));
     }
 }
