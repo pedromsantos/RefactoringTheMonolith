@@ -1,11 +1,13 @@
 package com.monolitospizza.controllers;
 
+import com.monolitospizza.model.Order;
 import com.monolitospizza.model.Pizza;
 import com.monolitospizza.services.MenuService;
 import com.monolitospizza.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,5 +45,13 @@ public class OrderController {
     public String startNewDeliveryOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap) {
         modelMap.addAttribute("currentOrder", orderService.startNewDeliveryOrder(customerId));
         return "order";
+    }
+
+    @RequestMapping("/chooseToppings")
+    public String updatePizzaAndChooseToppings(@ModelAttribute Pizza currentPizza, ModelMap modelMap) {
+        Order currentOrder = orderService.loadOrder(currentPizza.getOrder().getId());
+        currentPizza.setOrder(currentOrder);
+        orderService.updatePizza(currentPizza);
+        return "chooseToppings";
     }
 }

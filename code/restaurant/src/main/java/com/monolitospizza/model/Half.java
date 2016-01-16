@@ -1,6 +1,7 @@
 package com.monolitospizza.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import java.util.Set;
  */
 @Embeddable
 public class Half {
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Topping> toppings = new HashSet<>();
 
     public Set<Topping> getToppings() {

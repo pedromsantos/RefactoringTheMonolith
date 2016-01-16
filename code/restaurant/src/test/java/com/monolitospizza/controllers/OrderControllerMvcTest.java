@@ -54,4 +54,16 @@ public class OrderControllerMvcTest {
                 .andExpect(model().attributeExists("currentPizza"))
                 .andExpect(view().name("chooseBaseOptions"));
     }
+
+    @Test
+    public void shouldUpdatePizzaAndLoadToppingOptions() throws Exception {
+        this.mockMvc.perform(post("/chooseToppings")
+                .param("size", "10000")
+                .param("crust", "10000")
+                .param("sauce", "10000")
+                .param("order", "10000"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("chooseToppings"));
+
+    }
 }

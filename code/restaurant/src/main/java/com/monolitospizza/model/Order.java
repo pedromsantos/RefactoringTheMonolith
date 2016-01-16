@@ -77,5 +77,11 @@ public class Order {
     public int hashCode() {
         return Objects.hash(pizzas, type, customer);
     }
+
+    public static Order withId(long id) {
+        Order order = new Order();
+        order.id = id;
+        return order;
+    }
 }
 

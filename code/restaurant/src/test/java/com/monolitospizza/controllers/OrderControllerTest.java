@@ -94,4 +94,32 @@ public class OrderControllerTest {
         assertThat(modelMap.get("currentPizza"), is(equalTo(defaultPizzaConfiguration)));
     }
 
+    @Test
+    public void shouldUpdatePizzaAndLoadToppingOptions() {
+        Pizza currentPizza = new Pizza(new Size("Large", BigDecimal.ZERO),
+                new Crust("Thin"),
+                new Sauce("Normal"));
+        Order orderFromCmdObj = Order.withId(1L);
+        currentPizza.setOrder(orderFromCmdObj);
+
+        Order currentOrder = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+        when(mockOrderService.loadOrder(1L))
+                .thenReturn(currentOrder);
+
+        ModelMap modelMap = new ModelMap();
+
+        String view = orderController.updatePizzaAndChooseToppings(currentPizza, modelMap);
+
+        verify(mockOrderService).loadOrder(1L);
+
+        Pizza expectedUpdatePizza = new Pizza(new Size("Large", BigDecimal.ZERO),
+                new Crust("Thin"),
+                new Sauce("Normal"));
+        expectedUpdatePizza.setOrder(currentOrder);
+
+        verify(mockOrderService).updatePizza(expectedUpdatePizza);
+        assertThat(view, is(equalTo("chooseToppings")));
+    }
+
 }
