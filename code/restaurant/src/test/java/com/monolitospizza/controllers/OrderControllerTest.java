@@ -45,8 +45,9 @@ public class OrderControllerTest {
                 new Sauce("Normal"));
         modelMap = new ModelMap();
 
-        Order orderFromCmdObj = Order.withId(1L);
-        currentPizza.setOrder(orderFromCmdObj);
+        currentPizza.setOrder(new Order(1L,
+                OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187")));
 
         currentOrder = new Order(OrderType.FOR_PICKUP,
                 new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));

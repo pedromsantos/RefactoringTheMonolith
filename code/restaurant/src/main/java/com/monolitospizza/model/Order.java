@@ -30,6 +30,11 @@ public class Order {
     private Order() {
     }
 
+    public Order(Long id, OrderType type, Customer customer) {
+        this(type, customer);
+        this.id = id;
+    }
+
     public Order(OrderType type, Customer customer) {
         notNull(customer);
         if (type == OrderType.FOR_DELIVERY) {
@@ -78,10 +83,5 @@ public class Order {
         return Objects.hash(pizzas, type, customer);
     }
 
-    public static Order withId(long id) {
-        Order order = new Order();
-        order.id = id;
-        return order;
-    }
 }
 
