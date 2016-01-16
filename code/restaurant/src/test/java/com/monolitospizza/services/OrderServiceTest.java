@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -76,6 +77,18 @@ public class OrderServiceTest {
     }
 
     @Test
+    public void loadsAPizzaByItsId() {
+        Pizza expectedPizza = new Pizza(new Size("Large", BigDecimal.ZERO),
+                new Crust("Hand Tossed"),
+                new Sauce("Normal"));
+        when(mockPizzaRepository.findOne(1L))
+                .thenReturn(expectedPizza);
+
+        Pizza actualPizza = orderService.loadPizza(1L);
+        assertThat(actualPizza, is(equalTo(expectedPizza)));
+    }
+
+    @Test
     public void updatesPizza() {
         Pizza pizza = new Pizza(new Size("Large", BigDecimal.ZERO),
                 new Crust("Thin"),
@@ -87,5 +100,15 @@ public class OrderServiceTest {
         orderService.updatePizza(pizza);
 
         verify(mockPizzaRepository).save(pizza);
+    }
+
+    @Test
+    public void updatesOrder() {
+        Order order = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+
+        orderService.updateOrder(order);
+
+        verify(mockOrderRepository).save(order);
     }
 }

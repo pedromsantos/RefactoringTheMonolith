@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,11 +32,18 @@ public class ChooseToppingsViewHelperTest {
                 new Topping("Onion", BigDecimal.ZERO),
                 new Topping("Bell Pepper", BigDecimal.ZERO)
         );
-        pizza = new Pizza(
+        pizza = new Pizza(1L,
                 new Size("Large", BigDecimal.ZERO),
                 new Crust("Deep Dish"),
                 new Sauce("Normal")
         );
+    }
+
+    @Test
+    public void knowsItsPizzaId() {
+        ChooseToppingsViewHelper helper = new ChooseToppingsViewHelper(toppingOptions, pizza);
+
+        assertThat(helper.getPizzaId(), is(equalTo(1L)));
     }
 
     @Test

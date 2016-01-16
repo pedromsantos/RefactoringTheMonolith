@@ -41,6 +41,11 @@ public class Pizza {
         this.sauce = sauce;
     }
 
+    public Pizza (Long id, Size size, Crust crust, Sauce sauce) {
+        this(size, crust, sauce);
+        this.id = id;
+    }
+
 
     public Size getSize() {
         return size;
