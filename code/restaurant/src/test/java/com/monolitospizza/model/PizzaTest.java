@@ -63,6 +63,15 @@ public class PizzaTest {
     }
 
     @Test
+    public void canRemoveLeftToppingById() {
+        Topping topping = new Topping(1L, "Topping w/ ID", BigDecimal.ZERO);
+        pizza.addLeftTopping(topping);
+        pizza.removeLeftToppingById(1L);
+
+        assertFalse(pizza.leftHalfContainsTopping(sausage));
+    }
+
+    @Test
     public void canAddRightTopping() {
         pizza.addRightTopping(sausage);
 
@@ -75,6 +84,15 @@ public class PizzaTest {
         pizza.removeRightTopping(sausage);
 
         assertFalse(pizza.getRightHalf().getToppings().contains(sausage));
+    }
+
+    @Test
+    public void canRemoveRightToppingById() {
+        Topping topping = new Topping(1L, "Topping w/ ID", BigDecimal.ZERO);
+        pizza.addRightTopping(topping);
+        pizza.removeRightToppingById(1L);
+
+        assertFalse(pizza.rightHalfContainsTopping(sausage));
     }
 
     @Test
@@ -92,6 +110,15 @@ public class PizzaTest {
 
         assertFalse(pizza.getLeftHalf().getToppings().contains(sausage));
         assertFalse(pizza.getRightHalf().getToppings().contains(sausage));
+    }
+
+    @Test
+    public void canRemoveToppingById() {
+        Topping topping = new Topping(1L, "Topping w/ ID", BigDecimal.ZERO);
+        pizza.addTopping(topping);
+        pizza.removeToppingById(1L);
+
+        assertFalse(pizza.containsTopping(topping));
     }
 
     @Test
@@ -167,5 +194,7 @@ public class PizzaTest {
     public void pizzaKnowsIfWholeDoesNotContainATopping() {
         assertThat(pizza.wholePizzaContainsTopping(sausage), is(false));
     }
+
+
 
 }

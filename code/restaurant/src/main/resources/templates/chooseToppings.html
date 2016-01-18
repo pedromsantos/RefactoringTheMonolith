@@ -38,13 +38,18 @@
         <td></td>
         <td th:text="${lineItem.location}">Whole Pizza</td>
         <td>
-            <button type="submit">Remove</button>
+            <form action="#" th:action="@{/removeTopping}" method="post">
+                <input type="hidden" name="pizza" th:value="${helper.pizzaId}"/>
+                <input type="hidden" name="topping" th:value="${lineItem.topping.id}"/>
+                <input type="hidden" name="location" th:value="${lineItem.location}"/>
+                <button type="submit">Remove</button>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
 <p>
-    <button type="submit">Add Another Pizza</button>
+    <button type="submit">Save This Pizza</button>
 </p>
 <p>
     <button type="submit">Finalize Order</button>

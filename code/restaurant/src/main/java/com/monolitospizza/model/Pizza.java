@@ -156,4 +156,17 @@ public class Pizza {
     public void setSauce(Sauce sauce) {
         this.sauce = sauce;
     }
+
+    public void removeLeftToppingById(long toppingId) {
+        leftHalf.removeToppingById(toppingId);
+    }
+
+    public void removeRightToppingById(long toppingId) {
+        rightHalf.removeToppingById(toppingId);
+    }
+
+    public void removeToppingById(long toppingId) {
+        removeLeftToppingById(toppingId);
+        removeRightToppingById(toppingId);
+    }
 }

@@ -78,4 +78,15 @@ public class OrderControllerMvcTest {
                 .andExpect(model().attributeExists("helper"))
                 .andExpect(view().name("chooseToppings"));
     }
+
+    @Test
+    public void shoudRemoveToppingAndLoadToppingOptions() throws Exception {
+        this.mockMvc.perform(post("/removeTopping")
+                .param("topping", "10000")
+                .param("location", ChooseToppingsViewHelperLocation.WHOLE.toString())
+                .param("pizza", "10000"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("helper"))
+                .andExpect(view().name("chooseToppings"));
+    }
 }

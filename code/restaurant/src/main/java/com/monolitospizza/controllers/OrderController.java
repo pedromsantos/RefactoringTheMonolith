@@ -93,4 +93,30 @@ public class OrderController {
         );
         modelMap.addAttribute("helper", helper);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/removeTopping")
+    public String removeTopping(@RequestParam(name = "pizza") long pizzaId,
+                                @RequestParam(name = "topping") long toppingId,
+                                @RequestParam(name = "location") ChooseToppingsViewHelperLocation location,
+                                ModelMap modelMap) {
+        Pizza currentPizza = orderService.loadPizza(pizzaId);
+
+        switch(location) {
+            case LEFT:
+                currentPizza.removeLeftToppingById(toppingId);
+                break;
+            case RIGHT:
+                currentPizza.removeRightToppingById(toppingId);
+                break;
+            case WHOLE:
+                currentPizza.removeToppingById(toppingId);
+                break;
+        }
+
+        orderService.updatePizza(currentPizza);
+
+        prepareChooseToppingsViewHelper(currentPizza, modelMap);
+
+        return "chooseToppings";
+    }
 }

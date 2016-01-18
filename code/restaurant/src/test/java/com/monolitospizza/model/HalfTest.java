@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -48,5 +49,14 @@ public class HalfTest {
     @Test
     public void halfKnowsIfItDoesNotContainTopping() {
         assertThat(half.containsTopping(sausage), is(false));
+    }
+
+    @Test
+    public void canRemoveToppingById() {
+        Topping topping = new Topping(1L, "Topping w/ ID", BigDecimal.ZERO);
+        half.addTopping(topping);
+        half.removeToppingById(1L);
+
+        assertFalse(half.containsTopping(topping));
     }
 }

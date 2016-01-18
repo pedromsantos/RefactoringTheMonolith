@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Matt Stine
@@ -56,5 +57,12 @@ public class Half {
 
     public boolean containsTopping(Topping topping) {
         return this.toppings.contains(topping);
+    }
+
+    public void removeToppingById(Long toppingId) {
+        toppings = toppings
+                .stream()
+                .filter(topping -> !toppingId.equals(topping.getId()))
+                .collect(Collectors.toSet());
     }
 }

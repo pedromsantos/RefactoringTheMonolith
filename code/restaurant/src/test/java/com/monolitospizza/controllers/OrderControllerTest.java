@@ -204,4 +204,24 @@ public class OrderControllerTest {
         assertThat(view, is(equalTo("chooseToppings")));
     }
 
+    @Test
+    public void shoudRemoveToppingAndLoadToppingOptions() {
+        Topping sausage = new Topping(1L, "Sausage", BigDecimal.ZERO);
+        currentPizza.addRightTopping(sausage);
+        when(mockOrderService.loadPizza(1L))
+                .thenReturn(currentPizza);
+        ChooseToppingsViewHelper helper = new ChooseToppingsViewHelper(
+                expectedToppings,
+                expectedUpdatePizza
+        );
+
+        String view = orderController.removeTopping(1L, 1L, ChooseToppingsViewHelperLocation.RIGHT, modelMap);
+
+        verify(mockOrderService).loadPizza(1L);
+        verify(mockOrderService).updatePizza(expectedUpdatePizza);
+        verify(mockMenuService).loadToppingOptions();
+        assertThat(modelMap.get("helper"), is(equalTo(helper)));
+        assertThat(view, is(equalTo("chooseToppings")));
+    }
+
 }

@@ -26,6 +26,11 @@ public class Topping {
         this.price = price;
     }
 
+    public Topping(long id, String name, BigDecimal price) {
+        this(name, price);
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
