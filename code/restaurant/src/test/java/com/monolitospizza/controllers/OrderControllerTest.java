@@ -40,7 +40,7 @@ public class OrderControllerTest {
 
         orderController = new OrderController(mockOrderService, mockMenuService);
         customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
-        currentPizza = new Pizza(new Size("Large", BigDecimal.ZERO),
+        currentPizza = new Pizza(1L, new Size("Large", BigDecimal.ZERO),
                 new Crust("Thin"),
                 new Sauce("Normal"));
         modelMap = new ModelMap();
@@ -97,7 +97,7 @@ public class OrderControllerTest {
         Pizza defaultPizzaConfiguration = new Pizza(new Size("Large", BigDecimal.ZERO),
                 new Crust("Thin"),
                 new Sauce("Normal"));
-        Order order = new Order(OrderType.FOR_PICKUP,
+        Order order = new Order(1L, OrderType.FOR_PICKUP,
                 new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
 
         when(mockMenuService.loadBasePizzaMenuOptions())
@@ -107,29 +107,49 @@ public class OrderControllerTest {
         when(mockOrderService.loadOrder(1L))
                 .thenReturn(order);
 
+        Order updatedOrder = new Order(1L, OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+        Pizza savedPizza = new Pizza(1L, new Size("Large", BigDecimal.ZERO),
+                new Crust("Thin"),
+                new Sauce("Normal"));
+        updatedOrder.addPizza(savedPizza);
+
+        when(mockOrderService.updateOrder(updatedOrder))
+                .thenReturn(updatedOrder);
+
         String view = orderController.startNewPizza(1L, modelMap);
 
         verify(mockMenuService).loadBasePizzaMenuOptions();
         verify(mockMenuService).loadDefaultPizzaConfiguration();
         verify(mockOrderService).loadOrder(1L);
+        verify(mockOrderService).updateOrder(order);
         assertThat(view, is(equalTo("chooseBaseOptions")));
         assertThat(modelMap.get("basePizzaMenuOptions"), is(equalTo(basePizzaMenuOptions)));
 
         defaultPizzaConfiguration.setOrder(order);
-        assertThat(modelMap.get("currentPizza"), is(equalTo(defaultPizzaConfiguration)));
+        assertThat(modelMap.get("currentPizza"), is(equalTo(savedPizza)));
+        assertThat(((Pizza)modelMap.get("currentPizza")).getId(), is(equalTo(1L)));
     }
 
     @Test
     public void shouldUpdatePizzaAndLoadToppingOptions() {
+        when(mockOrderService.loadPizza(1L))
+                .thenReturn(currentPizza);
+
+        Pizza commandObject = new Pizza(1L, new Size("Small", BigDecimal.ZERO),
+                new Crust("Hand Tossed"),
+                new Sauce("None"));
+        commandObject.setOrder(currentOrder);
+
         ChooseToppingsViewHelper helper = new ChooseToppingsViewHelper(
                 expectedToppings,
-                currentPizza
+                commandObject
         );
 
-        String view = orderController.updatePizzaAndChooseToppings(currentPizza, modelMap);
+        String view = orderController.updatePizzaAndChooseToppings(commandObject, modelMap);
 
-        verify(mockOrderService).loadOrder(1L);
-        verify(mockOrderService).updateOrder(currentOrder);
+        verify(mockOrderService).loadPizza(1L);
+        verify(mockOrderService).updatePizza(commandObject);
         verify(mockMenuService).loadToppingOptions();
         assertThat(modelMap.get("helper"), is(equalTo(helper)));
         assertThat(view, is(equalTo("chooseToppings")));

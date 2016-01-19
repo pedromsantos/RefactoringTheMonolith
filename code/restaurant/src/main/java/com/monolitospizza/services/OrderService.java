@@ -49,7 +49,7 @@ public class OrderService {
         return pizzaRepository.findOne(pizzaId);
     }
 
-    public void updateOrder(Order currentOrder) {
-        orderRepository.save(currentOrder);
+    public Order updateOrder(Order currentOrder) {
+        return orderRepository.save(currentOrder);
     }
 }

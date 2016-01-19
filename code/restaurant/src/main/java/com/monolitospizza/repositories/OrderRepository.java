@@ -1,10 +1,10 @@
 package com.monolitospizza.repositories;
 
 import com.monolitospizza.model.Order;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author Matt Stine
  */
-public interface OrderRepository extends PagingAndSortingRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }

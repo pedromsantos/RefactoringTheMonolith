@@ -62,7 +62,7 @@ public class OrderControllerMvcTest {
                 .param("size", "10000")
                 .param("crust", "10000")
                 .param("sauce", "10000")
-                .param("order", "10000"))
+                .param("pizza", "10000"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("helper"))
                 .andExpect(view().name("chooseToppings"));
@@ -73,7 +73,7 @@ public class OrderControllerMvcTest {
         this.mockMvc.perform(post("/addTopping")
                 .param("topping", "10000")
                 .param("location", ChooseToppingsViewHelperLocation.WHOLE.toString())
-                .param("pizza", "10000"))
+                .param("id", "10000"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("helper"))
                 .andExpect(view().name("chooseToppings"));
@@ -84,7 +84,7 @@ public class OrderControllerMvcTest {
         this.mockMvc.perform(post("/removeTopping")
                 .param("topping", "10000")
                 .param("location", ChooseToppingsViewHelperLocation.WHOLE.toString())
-                .param("pizza", "10000"))
+                .param("id", "10000"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("helper"))
                 .andExpect(view().name("chooseToppings"));

@@ -19,7 +19,7 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Pizza> pizzas = new ArrayList<>();
     private OrderType type;
 
@@ -54,6 +54,7 @@ public class Order {
 
     public void addPizza(Pizza pizza) {
         this.pizzas.add(pizza);
+        pizza.setOrder(this);
     }
 
     public OrderType getType() {
@@ -87,5 +88,18 @@ public class Order {
         return Objects.hash(pizzas, type, customer);
     }
 
+    public Pizza getNewestPizza() {
+        return pizzas.get(pizzas.size() - 1);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", pizzas=" + pizzas +
+                ", type=" + type +
+                ", customer=" + customer +
+                '}';
+    }
 }
 

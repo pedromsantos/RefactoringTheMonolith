@@ -32,7 +32,7 @@
             </td>
         </tr>
         </thead>
-        <input type="hidden" name="pizza" th:value="${helper.pizzaId}"/>
+        <input type="hidden" name="id" th:value="${helper.pizzaId}"/>
     </form>
     <tbody>
     <tr th:each="lineItem : ${helper.toppingLineItems}">
@@ -42,7 +42,7 @@
         <td th:text="${lineItem.location}">Whole Pizza</td>
         <td>
             <form action="#" th:action="@{/removeTopping}" method="post">
-                <input type="hidden" name="pizza" th:value="${helper.pizzaId}"/>
+                <input type="hidden" name="id" th:value="${helper.pizzaId}"/>
                 <input type="hidden" name="topping" th:value="${lineItem.topping.id}"/>
                 <input type="hidden" name="location" th:value="${lineItem.location}"/>
                 <button type="submit">Remove</button>

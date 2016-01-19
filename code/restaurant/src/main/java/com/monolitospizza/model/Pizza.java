@@ -169,4 +169,21 @@ public class Pizza {
         removeLeftToppingById(toppingId);
         removeRightToppingById(toppingId);
     }
+
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "id=" + id +
+                ", size=" + size +
+                ", crust=" + crust +
+                ", leftHalf=" + leftHalf +
+                ", rightHalf=" + rightHalf +
+                ", sauce=" + sauce +
+                ", order=" + order +
+                '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
