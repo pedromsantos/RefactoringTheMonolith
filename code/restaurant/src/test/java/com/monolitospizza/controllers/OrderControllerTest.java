@@ -205,7 +205,7 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void shoudRemoveToppingAndLoadToppingOptions() {
+    public void shouldRemoveToppingAndLoadToppingOptions() {
         Topping sausage = new Topping(1L, "Sausage", BigDecimal.ZERO);
         currentPizza.addRightTopping(sausage);
         when(mockOrderService.loadPizza(1L))
@@ -223,5 +223,6 @@ public class OrderControllerTest {
         assertThat(modelMap.get("helper"), is(equalTo(helper)));
         assertThat(view, is(equalTo("chooseToppings")));
     }
+
 
 }
