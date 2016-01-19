@@ -19,9 +19,12 @@
             </td>
             <td><label th:for="${half}">Where?</label></td>
             <td><select th:name="location">
-                <option th:value="${T(com.monolitospizza.helpers.ChooseToppingsViewHelperLocation).WHOLE}">Whole Pizza</option>
-                <option th:value="${T(com.monolitospizza.helpers.ChooseToppingsViewHelperLocation).LEFT}">Left Half</option>
-                <option th:value="${T(com.monolitospizza.helpers.ChooseToppingsViewHelperLocation).RIGHT}">Right Half</option>
+                <option th:value="${T(com.monolitospizza.helpers.ChooseToppingsViewHelperLocation).WHOLE}">Whole Pizza
+                </option>
+                <option th:value="${T(com.monolitospizza.helpers.ChooseToppingsViewHelperLocation).LEFT}">Left Half
+                </option>
+                <option th:value="${T(com.monolitospizza.helpers.ChooseToppingsViewHelperLocation).RIGHT}">Right Half
+                </option>
             </select>
             </td>
             <td>
@@ -49,7 +52,10 @@
     </tbody>
 </table>
 <p>
+<form action="#" th:action="@{/continueOrder}" method="get">
+    <input type="hidden" name="order" th:value="${helper.orderId}"/>
     <button type="submit">Continue Order</button>
+</form>
 </p>
 <p>
     <button type="submit">Checkout</button>

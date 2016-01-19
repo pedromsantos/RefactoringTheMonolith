@@ -80,7 +80,7 @@ public class OrderControllerMvcTest {
     }
 
     @Test
-    public void shoudRemoveToppingAndLoadToppingOptions() throws Exception {
+    public void shouldRemoveToppingAndLoadToppingOptions() throws Exception {
         this.mockMvc.perform(post("/removeTopping")
                 .param("topping", "10000")
                 .param("location", ChooseToppingsViewHelperLocation.WHOLE.toString())
@@ -88,5 +88,14 @@ public class OrderControllerMvcTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("helper"))
                 .andExpect(view().name("chooseToppings"));
+    }
+
+    @Test
+    public void shouldLoadOrderWhenContinuing() throws Exception {
+        this.mockMvc.perform(get("/continueOrder")
+                .param("order", "10000"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("currentOrder"))
+                .andExpect(view().name("order"));
     }
 }

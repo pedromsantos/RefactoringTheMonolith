@@ -37,6 +37,9 @@ public class ChooseToppingsViewHelperTest {
                 new Crust("Deep Dish"),
                 new Sauce("Normal")
         );
+        Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
+        Order order =  new Order(1L, OrderType.FOR_PICKUP, customer);
+        pizza.setOrder(order);
     }
 
     @Test
@@ -44,6 +47,13 @@ public class ChooseToppingsViewHelperTest {
         ChooseToppingsViewHelper helper = new ChooseToppingsViewHelper(toppingOptions, pizza);
 
         assertThat(helper.getPizzaId(), is(equalTo(1L)));
+    }
+
+    @Test
+    public void knowsItsOrderId() {
+        ChooseToppingsViewHelper helper = new ChooseToppingsViewHelper(toppingOptions, pizza);
+
+        assertThat(helper.getOrderId(), is(equalTo(1L)));
     }
 
     @Test

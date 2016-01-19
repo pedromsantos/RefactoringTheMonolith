@@ -40,6 +40,11 @@ public class Crust {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(name);
     }

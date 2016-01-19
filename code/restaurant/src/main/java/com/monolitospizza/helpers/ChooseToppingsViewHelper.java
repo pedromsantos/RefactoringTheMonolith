@@ -15,9 +15,11 @@ public class ChooseToppingsViewHelper {
     private List<Topping> toppingOptions = new ArrayList<>();
     private List<ChooseToppingsViewHelperLineItem> toppingLineItems = new ArrayList<>();
     private Long pizzaId;
+    private Long orderId;
 
     public ChooseToppingsViewHelper(Iterable<Topping> toppingOptions, Pizza pizza) {
         this.pizzaId = pizza.getId();
+        this.orderId = pizza.getOrder().getId();
 
         toppingOptions.forEach(topping -> {
             if (!pizza.containsTopping(topping)) {
@@ -65,5 +67,9 @@ public class ChooseToppingsViewHelper {
     @Override
     public int hashCode() {
         return Objects.hash(toppingOptions, toppingLineItems);
+    }
+
+    public Long getOrderId() {
+        return orderId;
     }
 }

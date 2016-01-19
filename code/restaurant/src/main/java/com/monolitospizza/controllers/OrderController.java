@@ -119,4 +119,11 @@ public class OrderController {
 
         return "chooseToppings";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/continueOrder")
+    public String continueOrder(@RequestParam(name = "order") long orderId,
+                                ModelMap modelMap) {
+        modelMap.addAttribute("currentOrder", orderService.loadOrder(orderId));
+        return "order";
+    }
 }

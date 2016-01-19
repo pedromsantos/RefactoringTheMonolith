@@ -68,6 +68,10 @@ public class Order {
         return id;
     }
 
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

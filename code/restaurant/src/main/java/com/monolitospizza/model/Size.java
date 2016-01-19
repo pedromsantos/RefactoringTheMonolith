@@ -51,4 +51,9 @@ public class Size {
     public int hashCode() {
         return Objects.hash(name, price);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

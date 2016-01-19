@@ -224,5 +224,15 @@ public class OrderControllerTest {
         assertThat(view, is(equalTo("chooseToppings")));
     }
 
+    @Test
+    public void shouldLoadOrderWhenContinuing() {
+        when(mockOrderService.loadOrder(1L))
+                .thenReturn(currentOrder);
 
+        String view = orderController.continueOrder(1L, modelMap);
+
+        verify(mockOrderService).loadOrder(1L);
+        assertThat(modelMap.get("currentOrder"), is(equalTo(currentOrder)));
+        assertThat(view, is(equalTo("order")));
+    }
 }
