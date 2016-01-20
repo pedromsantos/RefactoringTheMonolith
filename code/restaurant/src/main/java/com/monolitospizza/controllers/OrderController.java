@@ -7,8 +7,6 @@ import com.monolitospizza.model.Pizza;
 import com.monolitospizza.model.Topping;
 import com.monolitospizza.services.MenuService;
 import com.monolitospizza.services.OrderService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class OrderController {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private final OrderService orderService;
     private final MenuService menuService;
@@ -61,8 +57,6 @@ public class OrderController {
     public String updatePizzaAndChooseToppings(@ModelAttribute Pizza commandObject, ModelMap modelMap) {
         Pizza currentPizza = orderService.loadPizza(commandObject.getId());
 
-        logger.info("currentPizza = {}", currentPizza);
-
         currentPizza.setCrust(commandObject.getCrust());
         currentPizza.setSauce(commandObject.getSauce());
         currentPizza.setSize(commandObject.getSize());
@@ -80,7 +74,7 @@ public class OrderController {
         Pizza currentPizza = orderService.loadPizza(pizzaId);
 
         Topping topping = menuService.loadTopping(toppingId);
-        switch(location) {
+        switch (location) {
             case LEFT:
                 currentPizza.addLeftTopping(topping);
                 break;
@@ -104,7 +98,7 @@ public class OrderController {
                                 ModelMap modelMap) {
         Pizza currentPizza = orderService.loadPizza(pizzaId);
 
-        switch(location) {
+        switch (location) {
             case LEFT:
                 currentPizza.removeLeftToppingById(toppingId);
                 break;

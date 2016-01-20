@@ -29,6 +29,18 @@ public class Pizza {
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "id=" + id +
+                ", size=" + size +
+                ", crust=" + crust +
+                ", leftHalf=" + leftHalf +
+                ", rightHalf=" + rightHalf +
+                ", sauce=" + sauce +
+                '}';
+    }
+
     private Pizza() {
         leftHalf = new Half();
         rightHalf = new Half();
@@ -168,19 +180,6 @@ public class Pizza {
     public void removeToppingById(long toppingId) {
         removeLeftToppingById(toppingId);
         removeRightToppingById(toppingId);
-    }
-
-    @Override
-    public String toString() {
-        return "Pizza{" +
-                "id=" + id +
-                ", size=" + size +
-                ", crust=" + crust +
-                ", leftHalf=" + leftHalf +
-                ", rightHalf=" + rightHalf +
-                ", sauce=" + sauce +
-                ", order=" + order +
-                '}';
     }
 
     public void setId(Long id) {
