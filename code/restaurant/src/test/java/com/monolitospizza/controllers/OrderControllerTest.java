@@ -49,10 +49,12 @@ public class OrderControllerTest {
 
         currentPizza.setOrder(new Order(1L,
                 OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187")));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"),
+                new Store()));
 
         currentOrder = new Order(OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"),
+                new Store());
         when(mockOrderService.loadOrder(1L))
                 .thenReturn(currentOrder);
 
@@ -71,7 +73,7 @@ public class OrderControllerTest {
 
     @Test
     public void startsANewPickupOrder() {
-        Order order = new Order(1L, OrderType.FOR_PICKUP, customer);
+        Order order = new Order(1L, OrderType.FOR_PICKUP, customer, new Store());
         when(mockOrderService.startNewPickupOrder(1L)).thenReturn(order);
 
         String view = orderController.startNewPickupOrder(1L, modelMap, mockHttpSession);
@@ -85,7 +87,7 @@ public class OrderControllerTest {
     @Test
     public void startsANewDeliveryOrder() {
         customer.setAddress(new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
-        Order order = new Order(1L, OrderType.FOR_DELIVERY, customer);
+        Order order = new Order(1L, OrderType.FOR_DELIVERY, customer, new Store());
         when(mockOrderService.startNewDeliveryOrder(1L)).thenReturn(order);
 
         String view = orderController.startNewDeliveryOrder(1L, modelMap, mockHttpSession);
@@ -105,7 +107,8 @@ public class OrderControllerTest {
                 new Crust("Thin"),
                 new Sauce("Normal"));
         Order order = new Order(1L, OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"),
+                new Store());
 
         when(mockMenuService.loadBasePizzaMenuOptions())
                 .thenReturn(basePizzaMenuOptions);
@@ -115,7 +118,8 @@ public class OrderControllerTest {
                 .thenReturn(order);
 
         Order updatedOrder = new Order(1L, OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"),
+                new Store());
         Pizza savedPizza = new Pizza(1L, new Size("Large", BigDecimal.ZERO),
                 new Crust("Thin"),
                 new Sauce("Normal"));

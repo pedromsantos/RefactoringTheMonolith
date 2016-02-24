@@ -2,6 +2,8 @@ insert into ROLE(ID,NAME) values (1, 'USER');
 
 insert into ADDRESS(ID, CITY, POSTAL_CODE, STATE, STREET_ADDRESS) values (10000, 'Jakku', '92187', 'CA', '2187 Jakku Ave.');
 
+insert into STORE(ID) values (10000);
+
 insert into CUSTOMER(ID, ACCOUNT_NON_EXPIRED, ACCOUNT_NON_LOCKED, CREDENTIALS_NON_EXPIRED, EMAIL, ENABLED, NAME, PASSWORD, PHONE, ADDRESS_ID) values (10000, TRUE, TRUE, TRUE, 'rey@theresistance.com', TRUE, 'Rey', 'password', '+1(999)999-9999)', 10000);
 
 insert into CUSTOMER_ROLES(CUSTOMER_ID, ROLES_ID) values (10000, 1);

@@ -137,7 +137,8 @@ public class PizzaTest {
     @Test
     public void canSpecifyAPizzasOrder() {
         Order order = new Order(OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"),
+                new Store());
         pizza.setOrder(order);
         assertThat(pizza.getOrder(), is(equalTo(order)));
     }

@@ -30,7 +30,7 @@ public class OrderTest {
         );
         customer.setAddress(address);
 
-        order = new Order(OrderType.FOR_DELIVERY, customer);
+        order = new Order(OrderType.FOR_DELIVERY, customer, new Store());
     }
 
     @Test
@@ -41,12 +41,12 @@ public class OrderTest {
     @Test(expected = IllegalArgumentException.class)
     public void deliveryOrderMustHaveCustomerWithAddress() {
         customer = new Customer("Rey", "rey@theresistance.com", "+1(999)999-9999");
-        order = new Order(OrderType.FOR_DELIVERY, customer);
+        order = new Order(OrderType.FOR_DELIVERY, customer, new Store());
     }
 
     @Test
     public void orderCanBeForPickup() {
-        order = new Order(OrderType.FOR_PICKUP, customer);
+        order = new Order(OrderType.FOR_PICKUP, customer, new Store());
 
         assertThat(order.getType(), equalTo(OrderType.FOR_PICKUP));
     }
@@ -97,6 +97,16 @@ public class OrderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void orderMustHaveACustomer() {
-        new Order(OrderType.FOR_DELIVERY, null);
+        new Order(OrderType.FOR_DELIVERY, null, new Store());
+    }
+
+    @Test
+    public void orderKeepsItsStore() {
+        assertThat(order.getStore(), is(notNullValue()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void orderMustHaveAStore() {
+        new Order(OrderType.FOR_DELIVERY, customer, null);
     }
 }

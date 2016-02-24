@@ -4,6 +4,7 @@ import com.monolitospizza.RestaurantApplication;
 import com.monolitospizza.model.Customer;
 import com.monolitospizza.model.Order;
 import com.monolitospizza.model.OrderType;
+import com.monolitospizza.model.Store;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,14 @@ public class OrderRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private StoreRepository storeRepository;
+
     @Test
     public void canSaveAnOrder() {
         Customer customer = customerRepository.findOne(10000L);
-        Order order = new Order(OrderType.FOR_PICKUP, customer);
+        Store store = storeRepository.findOne(10000L);
+        Order order = new Order(OrderType.FOR_PICKUP, customer, store);
 
         order = orderRepository.save(order);
 

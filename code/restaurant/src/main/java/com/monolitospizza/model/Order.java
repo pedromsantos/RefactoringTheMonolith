@@ -31,22 +31,29 @@ public class Order {
     @JoinColumn(name="CUSTOMER_ID")
     private Customer customer;
 
+    @OneToOne
+    @JoinColumn(name="STORE_ID")
+    private Store store;
+
     private Order() {
     }
 
-    public Order(Long id, OrderType type, Customer customer) {
-        this(type, customer);
+    public Order(Long id, OrderType type, Customer customer, Store store) {
+        this(type, customer, store);
         this.id = id;
     }
 
-    public Order(OrderType type, Customer customer) {
+    public Order(OrderType type, Customer customer, Store store) {
         notNull(customer);
+        notNull(store);
+
         if (type == OrderType.FOR_DELIVERY) {
             notNull(customer.getAddress());
         }
 
         this.type = type;
         this.customer = customer;
+        this.store = store;
     }
 
     public BigDecimal getPrice() {
@@ -104,6 +111,10 @@ public class Order {
                 ", type=" + type +
                 ", customer=" + customer +
                 '}';
+    }
+
+    public Store getStore() {
+        return store;
     }
 }
 

@@ -4,6 +4,7 @@ import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
 import com.monolitospizza.repositories.PizzaRepository;
+import com.monolitospizza.repositories.StoreRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,20 +28,24 @@ public class OrderServiceTest {
     private CustomerRepository mockCustomerRepository;
     private OrderService orderService;
     private PizzaRepository mockPizzaRepository;
+    private StoreRepository mockStoreRepository;
 
     @Before
     public void setUp() throws Exception {
         mockOrderRepository = mock(OrderRepository.class);
         mockCustomerRepository = mock(CustomerRepository.class);
         mockPizzaRepository = mock(PizzaRepository.class);
-        orderService = new OrderService(mockOrderRepository, mockCustomerRepository, mockPizzaRepository);
+        mockStoreRepository = mock(StoreRepository.class);
+        orderService = new OrderService(mockStoreRepository, mockOrderRepository, mockCustomerRepository, mockPizzaRepository);
     }
 
     @Test
     public void startsANewPickupOrder() {
         Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
-        Order expectedResult = new Order(OrderType.FOR_PICKUP, customer);
+        Store store = new Store(10000L);
+        Order expectedResult = new Order(OrderType.FOR_PICKUP, customer, store);
 
+        when(mockStoreRepository.findOne(10000L)).thenReturn(store);
         when(mockCustomerRepository.findOne(1L)).thenReturn(customer);
 
         Order result = orderService.startNewPickupOrder(1L);
@@ -54,8 +59,10 @@ public class OrderServiceTest {
     public void startsANewDeliveryOrder() {
         Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
         customer.setAddress(new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
-        Order expectedResult = new Order(OrderType.FOR_DELIVERY, customer);
+        Store store = new Store(10000L);
+        Order expectedResult = new Order(OrderType.FOR_DELIVERY, customer, store);
 
+        when(mockStoreRepository.findOne(10000L)).thenReturn(store);
         when(mockCustomerRepository.findOne(1L)).thenReturn(customer);
 
         Order result = orderService.startNewDeliveryOrder(1L);
@@ -68,7 +75,7 @@ public class OrderServiceTest {
     @Test
     public void loadsAnOrderByItsId() {
         Order expectedOrder = new Order(OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
         when(mockOrderRepository.findOne(1L))
                 .thenReturn(expectedOrder);
 
@@ -94,7 +101,7 @@ public class OrderServiceTest {
                 new Crust("Thin"),
                 new Sauce("Normal"));
         Order order = new Order(OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
         pizza.setOrder(order);
 
         orderService.updatePizza(pizza);
@@ -105,7 +112,7 @@ public class OrderServiceTest {
     @Test
     public void updatesOrder() {
         Order order = new Order(OrderType.FOR_PICKUP,
-                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"));
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
 
         orderService.updateOrder(order);
 
