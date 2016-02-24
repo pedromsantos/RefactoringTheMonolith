@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 /**
@@ -18,7 +19,12 @@ public class HomeController {
     CustomerRepository customerRepository;
 
     @RequestMapping("/")
-    public String loadCustomerForHome(Principal principal, ModelMap modelMap) {
+    public String loadCustomerForHome(Principal principal, ModelMap modelMap, HttpSession httpSession) {
+        Long currentOrderId = (Long) httpSession.getAttribute("currentOrder");
+        if (currentOrderId != null) {
+            return "redirect:/continueOrder";
+        }
+
         String email = principal.getName();
         modelMap.addAttribute("currentCustomer", customerRepository.findByEmail(email));
         return "home";

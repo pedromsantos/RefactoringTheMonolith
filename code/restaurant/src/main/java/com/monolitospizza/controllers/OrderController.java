@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Matt Stine
  */
@@ -31,26 +33,45 @@ public class OrderController {
     }
 
     @RequestMapping("/pickupOrder")
-    public String startNewPickupOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap) {
-        modelMap.addAttribute("currentOrder", orderService.startNewPickupOrder(customerId));
-        return "order";
+    public String startNewPickupOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap, HttpSession session) {
+        Long orderId = (Long) session.getAttribute("currentOrder");
+        if (orderId != null) {
+            return "redirect:/continueOrder";
+        } else {
+            Order currentOrder = orderService.startNewPickupOrder(customerId);
+            session.setAttribute("currentOrder", currentOrder.getId());
+            modelMap.addAttribute("currentOrder", currentOrder);
+            return "order";
+        }
     }
 
     @RequestMapping("/deliveryOrder")
-    public String startNewDeliveryOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap) {
-        modelMap.addAttribute("currentOrder", orderService.startNewDeliveryOrder(customerId));
-        return "order";
+    public String startNewDeliveryOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap, HttpSession session) {
+        Long orderId = (Long) session.getAttribute("currentOrder");
+        if (orderId != null) {
+            return "redirect:/continueOrder";
+        } else {
+            Order currentOrder = orderService.startNewDeliveryOrder(customerId);
+            session.setAttribute("currentOrder", currentOrder.getId());
+            modelMap.addAttribute("currentOrder", currentOrder);
+            return "order";
+        }
     }
 
     @RequestMapping("/addPizza")
-    public String startNewPizza(@RequestParam(name = "orderId") long orderId, ModelMap modelMap) {
-        modelMap.addAttribute("basePizzaMenuOptions", menuService.loadBasePizzaMenuOptions());
-        Pizza currentPizza = menuService.loadDefaultPizzaConfiguration();
-        Order currentOrder = orderService.loadOrder(orderId);
-        currentOrder.addPizza(currentPizza);
-        Order savedOrder = orderService.updateOrder(currentOrder);
-        modelMap.addAttribute("currentPizza", savedOrder.getNewestPizza());
-        return "chooseBaseOptions";
+    public String startNewPizza(HttpSession session, ModelMap modelMap) {
+        Long orderId = (Long) session.getAttribute("currentOrder");
+        if (orderId == null) {
+            return "redirect:/";
+        } else {
+            modelMap.addAttribute("basePizzaMenuOptions", menuService.loadBasePizzaMenuOptions());
+            Pizza currentPizza = menuService.loadDefaultPizzaConfiguration();
+            Order currentOrder = orderService.loadOrder(orderId);
+            currentOrder.addPizza(currentPizza);
+            Order savedOrder = orderService.updateOrder(currentOrder);
+            modelMap.addAttribute("currentPizza", savedOrder.getNewestPizza());
+            return "chooseBaseOptions";
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/chooseToppings")
@@ -118,10 +139,27 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/continueOrder")
-    public String continueOrder(@RequestParam(name = "order") long orderId,
+    public String continueOrder(HttpSession httpSession,
                                 ModelMap modelMap) {
-        modelMap.addAttribute("currentOrder", orderService.loadOrder(orderId));
-        return "order";
+        Long orderId = (Long) httpSession.getAttribute("currentOrder");
+        if (orderId == null) {
+            return "redirect:/";
+        } else {
+            modelMap.addAttribute("currentOrder", orderService.loadOrder(orderId));
+            return "order";
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/checkOut")
+    public String checkOut(HttpSession session, ModelMap modelMap) {
+        Long orderId = (Long) session.getAttribute("currentOrder");
+        if (orderId == null) {
+            return "redirect:/";
+        } else {
+            modelMap.addAttribute("currentOrder", orderService.loadOrder(orderId));
+            session.removeAttribute("currentOrder");
+            return "checkOut";
+        }
     }
 
     private void prepareChooseToppingsViewHelper(Pizza currentPizza, ModelMap modelMap) {

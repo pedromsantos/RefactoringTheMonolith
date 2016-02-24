@@ -49,7 +49,8 @@ public class OrderControllerMvcTest {
 
     @Test
     public void startsANewPizza() throws Exception {
-        this.mockMvc.perform(get("/addPizza?orderId=10000"))
+        this.mockMvc.perform(get("/addPizza")
+                .sessionAttr("currentOrder", 10000L))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("basePizzaMenuOptions"))
                 .andExpect(model().attributeExists("currentPizza"))
@@ -93,7 +94,7 @@ public class OrderControllerMvcTest {
     @Test
     public void shouldLoadOrderWhenContinuing() throws Exception {
         this.mockMvc.perform(get("/continueOrder")
-                .param("order", "10000"))
+                .sessionAttr("currentOrder", 10000L))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("currentOrder"))
                 .andExpect(view().name("order"));

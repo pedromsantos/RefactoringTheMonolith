@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -32,6 +33,7 @@ public class OrderControllerTest {
     private Order currentOrder;
     private Pizza expectedUpdatePizza;
     private Iterable<Topping> expectedToppings;
+    private HttpSession mockHttpSession;
 
     @Before
     public void setUp() throws Exception {
@@ -64,29 +66,34 @@ public class OrderControllerTest {
                 new Crust("Thin"),
                 new Sauce("Normal"));
         expectedUpdatePizza.setOrder(currentOrder);
+        mockHttpSession = mock(HttpSession.class);
     }
 
     @Test
     public void startsANewPickupOrder() {
-        Order order = new Order(OrderType.FOR_PICKUP, customer);
+        Order order = new Order(1L, OrderType.FOR_PICKUP, customer);
         when(mockOrderService.startNewPickupOrder(1L)).thenReturn(order);
 
-        String view = orderController.startNewPickupOrder(1L, modelMap);
+        String view = orderController.startNewPickupOrder(1L, modelMap, mockHttpSession);
 
         assertThat(view, is(equalTo("order")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
+
+        verify(mockHttpSession).setAttribute("currentOrder", 1L);
     }
 
     @Test
     public void startsANewDeliveryOrder() {
         customer.setAddress(new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
-        Order order = new Order(OrderType.FOR_DELIVERY, customer);
+        Order order = new Order(1L, OrderType.FOR_DELIVERY, customer);
         when(mockOrderService.startNewDeliveryOrder(1L)).thenReturn(order);
 
-        String view = orderController.startNewDeliveryOrder(1L, modelMap);
+        String view = orderController.startNewDeliveryOrder(1L, modelMap, mockHttpSession);
 
         assertThat(view, is(equalTo("order")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
+
+        verify(mockHttpSession).setAttribute("currentOrder", 1L);
     }
 
     @Test
@@ -117,7 +124,12 @@ public class OrderControllerTest {
         when(mockOrderService.updateOrder(updatedOrder))
                 .thenReturn(updatedOrder);
 
-        String view = orderController.startNewPizza(1L, modelMap);
+        HttpSession mockSession = mock(HttpSession.class);
+
+        when(mockSession.getAttribute("currentOrder"))
+                .thenReturn(1L);
+
+        String view = orderController.startNewPizza(mockSession, modelMap);
 
         verify(mockMenuService).loadBasePizzaMenuOptions();
         verify(mockMenuService).loadDefaultPizzaConfiguration();
@@ -246,13 +258,34 @@ public class OrderControllerTest {
 
     @Test
     public void shouldLoadOrderWhenContinuing() {
+        HttpSession mockHttpSession = mock(HttpSession.class);
+        when(mockHttpSession.getAttribute("currentOrder"))
+                .thenReturn(1L);
+
         when(mockOrderService.loadOrder(1L))
                 .thenReturn(currentOrder);
 
-        String view = orderController.continueOrder(1L, modelMap);
+        String view = orderController.continueOrder(mockHttpSession, modelMap);
 
         verify(mockOrderService).loadOrder(1L);
         assertThat(modelMap.get("currentOrder"), is(equalTo(currentOrder)));
         assertThat(view, is(equalTo("order")));
+    }
+
+    @Test
+    public void shouldCheckOut() {
+        HttpSession mockHttpSession = mock(HttpSession.class);
+        when(mockHttpSession.getAttribute("currentOrder"))
+                .thenReturn(1L);
+
+        when(mockOrderService.loadOrder(1L))
+                .thenReturn(currentOrder);
+
+        String view = orderController.checkOut(mockHttpSession, modelMap);
+
+        verify(mockOrderService).loadOrder(1L);
+        verify(mockHttpSession).removeAttribute("currentOrder");
+        assertThat(modelMap.get("currentOrder"), is(equalTo(currentOrder)));
+        assertThat(view, is(equalTo("checkOut")));
     }
 }
