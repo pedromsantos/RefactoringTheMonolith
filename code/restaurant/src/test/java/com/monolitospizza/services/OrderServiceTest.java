@@ -42,7 +42,7 @@ public class OrderServiceTest {
     @Test
     public void startsANewPickupOrder() {
         Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
-        Store store = new Store(10000L);
+        Store store = new Store(10000L, new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
         Order expectedResult = new Order(OrderType.FOR_PICKUP, customer, store);
 
         when(mockStoreRepository.findOne(10000L)).thenReturn(store);
@@ -59,7 +59,7 @@ public class OrderServiceTest {
     public void startsANewDeliveryOrder() {
         Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
         customer.setAddress(new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
-        Store store = new Store(10000L);
+        Store store = new Store(10000L, new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
         Order expectedResult = new Order(OrderType.FOR_DELIVERY, customer, store);
 
         when(mockStoreRepository.findOne(10000L)).thenReturn(store);
