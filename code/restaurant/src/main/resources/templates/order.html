@@ -11,7 +11,21 @@
 <h1>My Pizza Order</h1>
 
 <ul>
-    <li th:each="pizza : ${currentOrder.pizzas}" th:text="|${pizza.size} ${pizza.crust} Pizza (${pizza.sauce} Sauce) - $${#numbers.formatDecimal(pizza.price,1,2,'POINT')}|">Size Crust Pizza (Sauce) - $0.00</li>
+    <li th:each="pizza : ${currentOrder.pizzas}">
+        <span th:text="|${pizza.size} ${pizza.crust} Pizza (${pizza.sauce} Sauce) - $${#numbers.formatDecimal(pizza.price,1,2,'POINT')}|">Size Crust Pizza (Sauce) - $0.00</span>
+        <p>
+            Toppings left:
+            <ul>
+                <li th:each="topping : ${pizza.leftHalf.toppings}" th:text="${topping.name}">Sausage</li>
+            </ul>
+        </p>
+        <p>
+            Toppings right:
+            <ul>
+                <li th:each="topping : ${pizza.rightHalf.toppings}" th:text="${topping.name}">Sausage</li>
+            </ul>
+        </p>
+    </li>
 </ul>
 
 <a th:href="@{/addPizza(orderId=${currentOrder.id})}">Add a Pizza</a>
