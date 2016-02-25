@@ -34,8 +34,10 @@ public class Order {
     @OneToOne
     @JoinColumn(name="STORE_ID")
     private Store store;
+    private OrderStatus status;
 
     private Order() {
+        this.status = OrderStatus.STARTED;
     }
 
     public Order(Long id, OrderType type, Customer customer, Store store) {
@@ -44,6 +46,7 @@ public class Order {
     }
 
     public Order(OrderType type, Customer customer, Store store) {
+        this();
         notNull(customer);
         notNull(store);
 
@@ -115,6 +118,10 @@ public class Order {
 
     public Store getStore() {
         return store;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
     }
 }
 

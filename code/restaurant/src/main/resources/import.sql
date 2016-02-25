@@ -24,7 +24,7 @@ insert into SAUCE(ID, NAME) values (10001, 'Light');
 insert into SAUCE(ID, NAME) values (10002, 'None');
 insert into SAUCE(ID, NAME) values (10003, 'Heavy');
 
-insert into ORDERS(ID, TYPE, CUSTOMER_ID) values (10000, 0, 10000);
+insert into ORDERS(ID, TYPE, CUSTOMER_ID, STORE_ID, STATUS) values (10000, 0, 10000, 10000, 4);
 insert into HALF(ID) values (10000);
 insert into HALF(ID) values (10001)
 insert into PIZZA(ID, CRUST_ID, LEFT_HALF_ID, ORDER_ID, RIGHT_HALF_ID, SAUCE_ID, SIZE_ID) values (10000,10000,10000,10000,10001,10000,10000);

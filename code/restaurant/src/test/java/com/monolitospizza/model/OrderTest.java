@@ -109,4 +109,9 @@ public class OrderTest {
     public void orderMustHaveAStore() {
         new Order(OrderType.FOR_DELIVERY, customer, null);
     }
+
+    @Test
+    public void orderKeepsItsStatus() {
+        assertThat(order.getStatus(), is(notNullValue()));
+    }
 }

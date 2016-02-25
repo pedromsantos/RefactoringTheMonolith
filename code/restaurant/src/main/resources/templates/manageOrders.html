@@ -15,6 +15,7 @@
     <tr>
         <td>Type</td>
         <td>Customer Name</td>
+        <td>Status</td>
         <td>&nbsp;</td>
     </tr>
     </thead>
@@ -22,6 +23,7 @@
     <tr th:each="order : ${orders}">
         <td th:text="${order.type.displayName}">Dine-In</td>
         <td th:text="${order.customer.name}">BB-8</td>
+        <td th:text="${order.status}">Eaten</td>
         <td><a href="#">Order Details</a></td>
     </tr>
     </tbody>
