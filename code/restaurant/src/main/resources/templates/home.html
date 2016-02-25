@@ -20,8 +20,8 @@
     <p>
         <label for="orderType">Choose Order Type:</label>
         <select th:name="orderType">
-            <option th:value="${T(com.monolitospizza.model.OrderType).FOR_PICKUP}">Pickup</option>
-            <option th:value="${T(com.monolitospizza.model.OrderType).FOR_DELIVERY}">Delivery</option>
+            <option th:value="${T(com.monolitospizza.model.OrderType).FOR_PICKUP}" th:text="${T(com.monolitospizza.model.OrderType).FOR_PICKUP.displayName}">Pickup</option>
+            <option th:value="${T(com.monolitospizza.model.OrderType).FOR_DELIVERY}" th:text="${T(com.monolitospizza.model.OrderType).FOR_DELIVERY.displayName}">Delivery</option>
         </select>
     </p>
     <p>
