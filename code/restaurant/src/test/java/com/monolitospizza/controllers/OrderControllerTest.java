@@ -76,7 +76,7 @@ public class OrderControllerTest {
         Order order = new Order(1L, OrderType.FOR_PICKUP, customer, new Store());
         when(mockOrderService.startNewPickupOrder(1L)).thenReturn(order);
 
-        String view = orderController.startNewPickupOrder(1L, modelMap, mockHttpSession);
+        String view = orderController.startNewOrder(1L, OrderType.FOR_PICKUP, modelMap, mockHttpSession);
 
         assertThat(view, is(equalTo("order")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));
@@ -90,7 +90,7 @@ public class OrderControllerTest {
         Order order = new Order(1L, OrderType.FOR_DELIVERY, customer, new Store());
         when(mockOrderService.startNewDeliveryOrder(1L)).thenReturn(order);
 
-        String view = orderController.startNewDeliveryOrder(1L, modelMap, mockHttpSession);
+        String view = orderController.startNewOrder(1L, OrderType.FOR_DELIVERY, modelMap, mockHttpSession);
 
         assertThat(view, is(equalTo("order")));
         assertThat(modelMap.get("currentOrder"), is(equalTo(order)));

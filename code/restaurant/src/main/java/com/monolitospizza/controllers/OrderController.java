@@ -3,6 +3,7 @@ package com.monolitospizza.controllers;
 import com.monolitospizza.helpers.ChooseToppingsViewHelper;
 import com.monolitospizza.helpers.ChooseToppingsViewHelperLocation;
 import com.monolitospizza.model.Order;
+import com.monolitospizza.model.OrderType;
 import com.monolitospizza.model.Pizza;
 import com.monolitospizza.model.Topping;
 import com.monolitospizza.services.MenuService;
@@ -32,26 +33,21 @@ public class OrderController {
         this.menuService = menuService;
     }
 
-    @RequestMapping("/pickupOrder")
-    public String startNewPickupOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap, HttpSession session) {
+    @RequestMapping(method = RequestMethod.POST, value = "/newOrder")
+    public String startNewOrder(@RequestParam(name = "customerId") long customerId,
+                                @RequestParam(name = "orderType") OrderType orderType,
+                                ModelMap modelMap,
+                                HttpSession session) {
         Long orderId = (Long) session.getAttribute("currentOrder");
         if (orderId != null) {
             return "redirect:/continueOrder";
         } else {
-            Order currentOrder = orderService.startNewPickupOrder(customerId);
-            session.setAttribute("currentOrder", currentOrder.getId());
-            modelMap.addAttribute("currentOrder", currentOrder);
-            return "order";
-        }
-    }
-
-    @RequestMapping("/deliveryOrder")
-    public String startNewDeliveryOrder(@RequestParam(name = "customerId") long customerId, ModelMap modelMap, HttpSession session) {
-        Long orderId = (Long) session.getAttribute("currentOrder");
-        if (orderId != null) {
-            return "redirect:/continueOrder";
-        } else {
-            Order currentOrder = orderService.startNewDeliveryOrder(customerId);
+            Order currentOrder;
+            if (orderType == OrderType.FOR_PICKUP) {
+                currentOrder = orderService.startNewPickupOrder(customerId);
+            } else {
+                currentOrder = orderService.startNewDeliveryOrder(customerId);
+            }
             session.setAttribute("currentOrder", currentOrder.getId());
             modelMap.addAttribute("currentOrder", currentOrder);
             return "order";

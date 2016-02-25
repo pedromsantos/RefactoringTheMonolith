@@ -1,6 +1,7 @@
 package com.monolitospizza.controllers;
 
 import com.monolitospizza.repositories.CustomerRepository;
+import com.monolitospizza.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,9 @@ public class HomeController {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    StoreRepository storeRepository;
+
     @RequestMapping("/")
     public String loadCustomerForHome(Principal principal, ModelMap modelMap, HttpSession httpSession) {
         Long currentOrderId = (Long) httpSession.getAttribute("currentOrder");
@@ -27,6 +31,7 @@ public class HomeController {
 
         String email = principal.getName();
         modelMap.addAttribute("currentCustomer", customerRepository.findByEmail(email));
+        modelMap.addAttribute("stores", storeRepository.findAll());
         return "home";
     }
 }

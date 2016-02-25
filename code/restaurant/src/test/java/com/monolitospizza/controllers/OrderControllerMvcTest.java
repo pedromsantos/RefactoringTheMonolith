@@ -2,6 +2,7 @@ package com.monolitospizza.controllers;
 
 import com.monolitospizza.RestaurantApplication;
 import com.monolitospizza.helpers.ChooseToppingsViewHelperLocation;
+import com.monolitospizza.model.OrderType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,9 @@ public class OrderControllerMvcTest {
 
     @Test
     public void startsANewPickupOrder() throws Exception {
-        this.mockMvc.perform(get("/pickupOrder?customerId=10000"))
+        this.mockMvc.perform(post("/newOrder")
+                .param("customerId", "10000")
+                .param("orderType", OrderType.FOR_PICKUP.toString()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("currentOrder"))
                 .andExpect(view().name("order"));
@@ -41,7 +44,9 @@ public class OrderControllerMvcTest {
 
     @Test
     public void startsANewDeliveryOrder() throws Exception {
-        this.mockMvc.perform(get("/deliveryOrder?customerId=10000"))
+        this.mockMvc.perform(post("/newOrder")
+                .param("customerId", "10000")
+                .param("orderType", OrderType.FOR_DELIVERY.toString()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("currentOrder"))
                 .andExpect(view().name("order"));

@@ -7,9 +7,27 @@
 <h1>Welcome to Monolito's Pizza!</h1>
 
 <h2>Place a New Order:</h2>
-<ul>
-    <li><a th:href="@{/deliveryOrder(customerId=${currentCustomer.id})}">Delivery</a></li>
-    <li><a th:href="@{/pickupOrder(customerId=${currentCustomer.id})}">Pickup</a></li>
-</ul>
+<form action="#" th:action="@{/newOrder}" method="post">
+    <p>
+        <label for="store">Choose Store:</label>
+        <select th:name="store">
+            <option th:each="store : ${stores}"
+                    th:value="${store.id}"
+                    th:text="${store.address.streetAddress}">Some Topping
+            </option>
+        </select>
+    </p>
+    <p>
+        <label for="orderType">Choose Order Type:</label>
+        <select th:name="orderType">
+            <option th:value="${T(com.monolitospizza.model.OrderType).FOR_PICKUP}">Pickup</option>
+            <option th:value="${T(com.monolitospizza.model.OrderType).FOR_DELIVERY}">Delivery</option>
+        </select>
+    </p>
+    <p>
+        <button type="submit">Go!</button>
+    </p>
+    <input type="hidden" th:name="customerId" th:value="${currentCustomer.id}"/>
+</form>
 </body>
 </html>
