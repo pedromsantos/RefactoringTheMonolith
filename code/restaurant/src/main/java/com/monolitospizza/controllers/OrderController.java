@@ -153,6 +153,7 @@ public class OrderController {
             return "redirect:/";
         } else {
             modelMap.addAttribute("currentOrder", orderService.loadOrder(orderId));
+            orderService.submitOrder(orderId);
             session.removeAttribute("currentOrder");
             return "checkOut";
         }

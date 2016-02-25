@@ -118,4 +118,20 @@ public class OrderServiceTest {
 
         verify(mockOrderRepository).save(order);
     }
+
+    @Test
+    public void submitsOrder() {
+        Order order = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
+        Order submittedOrder = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
+        submittedOrder.setStatus(OrderStatus.SUBMITTED);
+
+        when(mockOrderRepository.findOne(1L))
+                .thenReturn(order);
+
+        orderService.submitOrder(1L);
+
+        verify(mockOrderRepository).save(submittedOrder);
+    }
 }

@@ -1,9 +1,6 @@
 package com.monolitospizza.services;
 
-import com.monolitospizza.model.Order;
-import com.monolitospizza.model.OrderType;
-import com.monolitospizza.model.Pizza;
-import com.monolitospizza.model.Store;
+import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
 import com.monolitospizza.repositories.PizzaRepository;
@@ -58,5 +55,11 @@ public class OrderService {
 
     public Order updateOrder(Order currentOrder) {
         return orderRepository.save(currentOrder);
+    }
+
+    public void submitOrder(long orderId) {
+        Order order = orderRepository.findOne(orderId);
+        order.setStatus(OrderStatus.SUBMITTED);
+        orderRepository.save(order);
     }
 }
