@@ -11,6 +11,4 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("site")
 public class SiteAmqpConfig {
-
-
 }

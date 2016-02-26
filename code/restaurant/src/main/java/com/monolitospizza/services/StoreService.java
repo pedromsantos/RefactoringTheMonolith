@@ -21,17 +21,18 @@ import java.util.List;
 @Profile("store")
 public class StoreService {
 
-    @Value("${monolitos.storeId}")
-    private String storeId;
+    private final String storeId;
 
     private final OrderRepository orderRepository;
     private final StoreRepository storeRepository;
 
     @Autowired
     public StoreService(StoreRepository storeRepository,
-                        OrderRepository orderRepository) {
+                        OrderRepository orderRepository,
+                        @Value("${monolitos.storeId}") String storeId) {
         this.storeRepository = storeRepository;
         this.orderRepository = orderRepository;
+        this.storeId = storeId;
     }
 
     public List<Order> ordersForStore(long storeId) {
@@ -47,7 +48,6 @@ public class StoreService {
         } catch (Exception e) {
             return new DispatchOrderResponse("Error from Store #" + order.getStore().getId() + ": " + e.getMessage());
         }
-
         return new DispatchOrderResponse();
     }
 }

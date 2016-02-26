@@ -1,5 +1,7 @@
 monolitos:
   storeId: 1
+  incomingOrderQueueNamePrefix: monolitos.store.
+  incomingOrderQueueNameSuffix: .incomingOrders
 
 ---
 

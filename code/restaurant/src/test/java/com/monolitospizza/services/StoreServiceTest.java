@@ -29,7 +29,7 @@ public class StoreServiceTest {
         mockOrderRepository = mock(OrderRepository.class);
         mockStoreRepository = mock(StoreRepository.class);
 
-        storeService = new StoreService(mockStoreRepository, mockOrderRepository);
+        storeService = new StoreService(mockStoreRepository, mockOrderRepository, "10000");
     }
 
     @Test
