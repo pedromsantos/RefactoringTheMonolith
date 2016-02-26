@@ -10,44 +10,92 @@ buildscript {
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot' 
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
 
-jar {
-	baseName = 'restaurant'
-	version = '0.0.1-SNAPSHOT'
-}
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
 
-repositories {
-	mavenCentral()
-}
+	repositories {
+		mavenCentral()
+	}
 
-
-dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-starter-amqp')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-integration')
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-devtools')
-	runtime('com.h2database:h2')
-	runtime('org.postgresql:postgresql')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
-}
-
-
-eclipse {
-	classpath {
-		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	eclipse {
+		classpath {
+			containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+			containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+		}
 	}
 }
+
+subprojects {
+	apply plugin: 'spring-boot'
+}
+
+project(':common') {
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-data-jpa')
+		compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-web')
+
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+		runtime('com.h2database:h2')
+	}
+
+	jar {
+		baseName = 'restaurant-common'
+		version = '0.0.1-SNAPSHOT'
+	}
+}
+
+project(':site') {
+	dependencies {
+		compile project(':common')
+		compile('org.springframework.boot:spring-boot-starter-actuator')
+		compile('org.springframework.boot:spring-boot-starter-amqp')
+		compile('org.springframework.boot:spring-boot-starter-data-jpa')
+		compile('org.springframework.boot:spring-boot-starter-integration')
+		compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-devtools')
+		runtime('com.h2database:h2')
+		runtime('org.postgresql:postgresql')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+
+	jar {
+		baseName = 'restaurant-site'
+		version = '0.0.1-SNAPSHOT'
+	}
+}
+
+project(':store') {
+	dependencies {
+		compile project(':common')
+		compile('org.springframework.boot:spring-boot-starter-actuator')
+		compile('org.springframework.boot:spring-boot-starter-amqp')
+		compile('org.springframework.boot:spring-boot-starter-data-jpa')
+		compile('org.springframework.boot:spring-boot-starter-integration')
+		compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-devtools')
+		runtime('com.h2database:h2')
+		runtime('org.postgresql:postgresql')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+
+	jar {
+		baseName = 'restaurant-store'
+		version = '0.0.1-SNAPSHOT'
+	}
+}
+
+
+
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.9'
