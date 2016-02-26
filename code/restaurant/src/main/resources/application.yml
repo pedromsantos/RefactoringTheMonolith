@@ -1,6 +1,5 @@
 monolitos:
   storeId: 1
-  mode: SITE
 
 ---
 
@@ -9,7 +8,6 @@ spring:
 
 monolitos:
   storeId: 10000
-  mode: STORE
 
 server:
   port: 8081
