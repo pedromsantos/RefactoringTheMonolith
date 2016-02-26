@@ -3,13 +3,14 @@ package com.monolitospizza.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Matt Stine
  */
 @Entity
-public class Crust {
+public class Crust implements Serializable {
 
     private String name;
     @Id

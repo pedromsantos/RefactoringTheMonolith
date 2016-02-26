@@ -1,5 +1,6 @@
 package com.monolitospizza.services;
 
+import com.monolitospizza.messaging.DispatchOrderResponse;
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
@@ -7,17 +8,19 @@ import com.monolitospizza.repositories.PizzaRepository;
 import com.monolitospizza.repositories.StoreRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Matt Stine
@@ -29,14 +32,19 @@ public class OrderServiceTest {
     private OrderService orderService;
     private PizzaRepository mockPizzaRepository;
     private StoreRepository mockStoreRepository;
+    private DispatchService mockDispatchService;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+
         mockOrderRepository = mock(OrderRepository.class);
         mockCustomerRepository = mock(CustomerRepository.class);
         mockPizzaRepository = mock(PizzaRepository.class);
         mockStoreRepository = mock(StoreRepository.class);
-        orderService = new OrderService(mockStoreRepository, mockOrderRepository, mockCustomerRepository, mockPizzaRepository);
+        mockDispatchService = mock(DispatchService.class);
+        orderService = new OrderService(mockStoreRepository,
+                mockOrderRepository, mockCustomerRepository, mockPizzaRepository, mockDispatchService);
     }
 
     @Test
@@ -119,19 +127,31 @@ public class OrderServiceTest {
         verify(mockOrderRepository).save(order);
     }
 
+    @Captor
+    ArgumentCaptor<Order> orderCaptor;
+
     @Test
     public void submitsOrder() {
         Order order = new Order(OrderType.FOR_PICKUP,
                 new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
+
         Order submittedOrder = new Order(OrderType.FOR_PICKUP,
                 new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
         submittedOrder.setStatus(OrderStatus.SUBMITTED);
 
+        Order receivedOrder = new Order(OrderType.FOR_PICKUP,
+                new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187"), new Store());
+        receivedOrder.setStatus(OrderStatus.RECEIVED);
+
         when(mockOrderRepository.findOne(1L))
                 .thenReturn(order);
 
+        when(mockDispatchService.dispatchOrder(submittedOrder))
+                .thenReturn(new DispatchOrderResponse());
+
         orderService.submitOrder(1L);
 
-        verify(mockOrderRepository).save(submittedOrder);
+        //TODO: make this test verify the actual arguments
+        verify(mockOrderRepository, times(2)).save(order);
     }
 }

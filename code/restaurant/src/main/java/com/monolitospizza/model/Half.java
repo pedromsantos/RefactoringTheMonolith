@@ -1,6 +1,7 @@
 package com.monolitospizza.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
  * @author Matt Stine
  */
 @Entity
-public class Half {
+public class Half implements Serializable {
     @Id
     @GeneratedValue
     private Long id;

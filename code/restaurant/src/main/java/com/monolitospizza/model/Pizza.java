@@ -1,6 +1,7 @@
 package com.monolitospizza.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import static org.springframework.util.Assert.notNull;
  * @author Matt Stine
  */
 @Entity
-public class Pizza {
+public class Pizza implements Serializable {
 
     @Id
     @GeneratedValue

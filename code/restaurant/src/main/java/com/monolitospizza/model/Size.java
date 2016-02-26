@@ -3,6 +3,7 @@ package com.monolitospizza.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
  * @author Matt Stine
  */
 @Entity
-public class Size {
+public class Size implements Serializable {
 
     @Id
     @GeneratedValue

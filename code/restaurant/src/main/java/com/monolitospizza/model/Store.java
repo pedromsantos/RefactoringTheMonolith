@@ -2,13 +2,16 @@ package com.monolitospizza.model;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import static org.springframework.util.Assert.notNull;
 
 /**
  * @author Matt Stine
  */
 @Entity
-public class Store {
+public class Store implements Serializable {
 
     @Id
     @GeneratedValue
@@ -37,5 +40,26 @@ public class Store {
 
     public Address getAddress() {
         return address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Store store = (Store) o;
+        return Objects.equals(address, store.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address);
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", address=" + address +
+                '}';
     }
 }

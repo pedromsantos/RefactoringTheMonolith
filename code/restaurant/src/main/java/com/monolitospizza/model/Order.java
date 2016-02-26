@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import static org.springframework.util.Assert.notNull;
  */
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue
@@ -94,12 +95,14 @@ public class Order {
         Order order = (Order) o;
         return Objects.equals(pizzas, order.pizzas) &&
                 type == order.type &&
-                Objects.equals(customer, order.customer);
+                Objects.equals(customer, order.customer) &&
+                Objects.equals(store, order.store) &&
+                status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pizzas, type, customer);
+        return Objects.hash(pizzas, type, customer, store, status);
     }
 
     public Pizza getNewestPizza() {
@@ -113,6 +116,8 @@ public class Order {
                 ", pizzas=" + pizzas +
                 ", type=" + type +
                 ", customer=" + customer +
+                ", store=" + store +
+                ", status=" + status +
                 '}';
     }
 

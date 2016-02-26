@@ -1,9 +1,11 @@
 package com.monolitospizza.model;
 
+import java.io.Serializable;
+
 /**
  * @author Matt Stine
  */
-public enum OrderStatus {
+public enum OrderStatus implements Serializable {
     STARTED("Started"),
     SUBMITTED("Submitted"),
     DISPATCHED("Dispatched"),
