@@ -28,6 +28,10 @@ Their current system is very monolithic and is deployed at every store! As their
 
 Recently the Monolito brothers learned about the promise of microservices architectures enabling continuous delivery of business value. They've contracted our team of consultants to help decompose their monolith so that they can get back on track.
 
+== A Tour of the Refactoring
+
+The refactoring is documented link:docs/refactoring.adoc[here] in detail.
+
 == What this Presentation ``Punts'' On
 
 While these subtopics deserve consideration, in the interest of fitting in to the allotted time (90 minutes), I simply couldn't include everything. I also wanted to focus on the decomposition of the business functionality, and not on the tedium of technology stack migration:

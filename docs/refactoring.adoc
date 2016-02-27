@@ -1,0 +1,13 @@
+= A Tour of the Refactoring
+:compat-mode:
+
+== Step One: Independent Deployability
+
+There's no real hope of having any sort of success with microservices as long as we're in the state where the same exact codebase must be deployed to run the website and to support managing individual stores. The eventual microservices we build will likely look very different in each context. So our first step is to create two independently deployable monoliths, each supporting a `common` shared library. The scope of the shared library gives us a real picture of just how tightly coupled the site and store code really are.
+
+So in this stage we:
+
+* Create a Gradle subproject structure: `common`, `store`, `site`.
+* Refactor `build.gradle` to manage three subprojects, and we add `settings.gradle`.
+* Parcel code out into the various subprojects.
+* Fix compile errors and failing tests.
