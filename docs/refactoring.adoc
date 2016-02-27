@@ -21,3 +21,23 @@ So in this stage we:
 * Add a `StoreService` method, `orderDetails`.
 * Add a `StoreController` method, `orderDetails`.
 * Add a UI template, `orderDetails.html`.
+
+== Step Three: Decouple the Contract between Site and Store
+
+It was really easy to finish up that order details feature on the Store application. Unfortunately, the ease is deceptive. It was predicated on the fact that we are maintaining exactly the same DB schema, JPA domain model, and `OrderRepository` bewteen the two applications, all of this residing in the `common` project.
+
+If you think about the responsibilities of the two applications, they're quite different:
+
+* The Site application is charged with managing all of the various menu options and price combinations, as well as the customer address. It needs to have the full data model with all of its reference data to do this work.
+* The Store application is charged with telling the stores what pizzas to prepare. We'll assume in this example that the store employees won't be editing these orders, just updating their status. So we don't need the full data model with all of its reference data. A denormalized representation of the exact order details will suffice!
+
+So, we can break the contract by changing the messaging contract to only transmit the denormalized representation as JSON. This should eliminate the Store's dependency on the full JPA model and DB schema, and allow us to more fully decouple the applications.
+
+So in this stage we:
+
+* Implement a denormalized representation of the domain model as `OrderMessage`, `PizzaMessage`, etc.
+* Implement `OrderTransformer` to convert the JPA model into the integration contract model.
+* Introduce Spring Integration on both sides of the contract to facilitate the transformation and serialization of the model, as well as the AMQP orchestration.
+* Eliminate the `common` project by inlining the JPA model and Spring Data repositories into the `site` project.
+* Implement a lightweight JPA domain model in the `store` project.
+* Convert the `store` UI to use the new lightweight domain model. 

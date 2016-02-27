@@ -9,7 +9,6 @@ import com.monolitospizza.model.Topping;
 import com.monolitospizza.services.MenuService;
 import com.monolitospizza.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpSession;
  * @author Matt Stine
  */
 @Controller
-@Profile("site")
 public class OrderController {
 
     private final OrderService orderService;

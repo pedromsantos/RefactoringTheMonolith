@@ -13,22 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Matt Stine
  */
 @Controller
-@Profile("store")
 public class StoreController {
 
-    private final long storeId;
     private final StoreService storeService;
 
     @Autowired
-    public StoreController(StoreService storeService,
-                           @Value("${monolitos.storeId}") long storeId) {
+    public StoreController(StoreService storeService) {
         this.storeService = storeService;
-        this.storeId = storeId;
     }
 
     @RequestMapping("/manageOrders")
     public String manageOrders(ModelMap modelMap) {
-        modelMap.addAttribute("orders", storeService.ordersForStore(storeId));
+        modelMap.addAttribute("orders", storeService.ordersForStore());
         return "manageOrders";
     }
 

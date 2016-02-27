@@ -34,29 +34,30 @@ subprojects {
 	apply plugin: 'spring-boot'
 }
 
-project(':common') {
-	dependencies {
-		compile('org.springframework.boot:spring-boot-starter-data-jpa')
-		compile('org.springframework.boot:spring-boot-starter-security')
-		compile('org.springframework.boot:spring-boot-starter-web')
-
-		testCompile('org.springframework.boot:spring-boot-starter-test')
-		runtime('com.h2database:h2')
-	}
-
-	jar {
-		baseName = 'restaurant-common'
-		version = '0.0.1-SNAPSHOT'
-	}
-}
+//project(':common') {
+//	dependencies {
+//		compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//		compile('org.springframework.boot:spring-boot-starter-security')
+//		compile('org.springframework.boot:spring-boot-starter-web')
+//
+//		testCompile('org.springframework.boot:spring-boot-starter-test')
+//		runtime('com.h2database:h2')
+//	}
+//
+//	jar {
+//		baseName = 'restaurant-common'
+//		version = '0.0.1-SNAPSHOT'
+//	}
+//}
 
 project(':site') {
 	dependencies {
-		compile project(':common')
+//		compile project(':common')
 		compile('org.springframework.boot:spring-boot-starter-actuator')
 		compile('org.springframework.boot:spring-boot-starter-amqp')
 		compile('org.springframework.boot:spring-boot-starter-data-jpa')
 		compile('org.springframework.boot:spring-boot-starter-integration')
+		compile('org.springframework.integration:spring-integration-amqp')
 		compile('org.springframework.boot:spring-boot-starter-security')
 		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 		compile('org.springframework.boot:spring-boot-starter-web')
@@ -74,11 +75,12 @@ project(':site') {
 
 project(':store') {
 	dependencies {
-		compile project(':common')
+//		compile project(':common')
 		compile('org.springframework.boot:spring-boot-starter-actuator')
 		compile('org.springframework.boot:spring-boot-starter-amqp')
 		compile('org.springframework.boot:spring-boot-starter-data-jpa')
 		compile('org.springframework.boot:spring-boot-starter-integration')
+		compile('org.springframework.integration:spring-integration-amqp')
 		compile('org.springframework.boot:spring-boot-starter-security')
 		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 		compile('org.springframework.boot:spring-boot-starter-web')

@@ -1,1 +1,1 @@
-include 'common', 'site', 'store'
+include 'site', 'store'

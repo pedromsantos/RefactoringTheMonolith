@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <int:gateway id="dispatchGateway"
+                 service-interface="com.monolitospizza.integration.DispatchGateway"
+                 default-request-channel="submittedOrdersChannel"
+                 default-reply-channel="dispatchResponseChannel"/>
+
+    <int:channel id="submittedOrdersChannel"/>
+
+    <int:transformer input-channel="submittedOrdersChannel"
+                     output-channel="jsonTransformChannel"
+                     ref="orderTransformer"
+                     method="transform"/>
+
+    <int:channel id="jsonTransformChannel"/>
+
+    <int:chain input-channel="jsonTransformChannel"
+               output-channel="outboundOrdersChannel">
+        <int:header-enricher>
+            <int:header name="routingKey" expression="@routingKeyResolver.getRoutingKeyFor(payload.storeId)"/>
+        </int:header-enricher>
+        <int:object-to-json-transformer content-type="text/plain"/>
+    </int:chain>
+
+    <int:channel id="outboundOrdersChannel"/>
+
+    <int-amqp:outbound-gateway request-channel="outboundOrdersChannel"
+                               reply-channel="inboundResponseChannel"
+                               routing-key-expression="headers.routingKey"/>
+
+    <int:channel id="inboundResponseChannel"/>
+
+    <int:json-to-object-transformer input-channel="inboundResponseChannel"
+                                    output-channel="dispatchResponseChannel"/>
+
+    <int:channel id="dispatchResponseChannel"/>
+
+</beans>

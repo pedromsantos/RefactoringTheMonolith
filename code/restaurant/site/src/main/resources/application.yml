@@ -1,0 +1,3 @@
+monolitos:
+  incomingOrderQueueNamePrefix: monolitos.store.
+  incomingOrderQueueNameSuffix: .incomingOrders

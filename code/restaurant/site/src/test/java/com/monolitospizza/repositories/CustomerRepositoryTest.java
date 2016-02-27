@@ -1,7 +1,7 @@
 package com.monolitospizza.repositories;
 
 import com.monolitospizza.RestaurantSiteApplication;
-import com.monolitospizza.model.Sauce;
+import com.monolitospizza.model.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -20,21 +19,17 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = RestaurantSiteApplication.class)
 @IntegrationTest
-public class SauceRepositoryTest {
+public class CustomerRepositoryTest {
 
     @Autowired
-    private SauceRepository sauceRepository;
+    private CustomerRepository customerRepository;
 
     @Test
-    public void canSaveASauce() {
-        Sauce sauce = new Sauce("Normal");
-        sauce = sauceRepository.save(sauce);
-        assertThat(sauce.getId(), is(notNullValue()));
+    public void canSaveACustomer() {
+        Customer customer = new Customer("Rey", "customer@theresistance.com", "+1(999)999-9999");
+        customer = customerRepository.save(customer);
+        assertThat(customer.getId(), is(notNullValue()));
     }
 
-    @Test
-    public void canFindByName() {
-        Sauce sauce = sauceRepository.findOneByName("Normal");
-        assertThat(sauce, is(equalTo(new Sauce("Normal"))));
-    }
+
 }

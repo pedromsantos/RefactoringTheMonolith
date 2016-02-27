@@ -1,38 +1,45 @@
 package com.monolitospizza.services;
 
-import com.monolitospizza.messaging.DispatchOrderResponse;
-import com.monolitospizza.model.*;
+import com.monolitospizza.integration.DispatchGateway;
+import com.monolitospizza.integration.DispatchOrderResponse;
+import com.monolitospizza.model.Order;
+import com.monolitospizza.model.OrderStatus;
+import com.monolitospizza.model.OrderType;
+import com.monolitospizza.model.Pizza;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
 import com.monolitospizza.repositories.PizzaRepository;
 import com.monolitospizza.repositories.StoreRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
  * @author Matt Stine
  */
 @Service
-@Profile("site")
 public class OrderService {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private final StoreRepository storeRepository;
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final PizzaRepository pizzaRepository;
-    private final DispatchService dispatchService;
+    private final DispatchGateway dispatchGateway;
 
     @Autowired
     public OrderService(StoreRepository storeRepository,
                         OrderRepository orderRepository,
                         CustomerRepository customerRepository,
                         PizzaRepository pizzaRepository,
-                        DispatchService dispatchService) {
+                        DispatchGateway dispatchGateway) {
         this.storeRepository = storeRepository;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.pizzaRepository = pizzaRepository;
-        this.dispatchService = dispatchService;
+        this.dispatchGateway = dispatchGateway;
     }
 
     public Order startNewPickupOrder(long customerId) {
@@ -67,8 +74,9 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         order.setStatus(OrderStatus.SUBMITTED);
         orderRepository.save(order);
-        DispatchOrderResponse response = dispatchService.dispatchOrder(order);
+        DispatchOrderResponse response = dispatchGateway.dispatchOrder(order);
         if (response.getErrorMessage() != null) {
+            logger.error(response.getErrorMessage());
             order.setStatus(OrderStatus.DISPATCHED);
         } else {
             order.setStatus(OrderStatus.RECEIVED);

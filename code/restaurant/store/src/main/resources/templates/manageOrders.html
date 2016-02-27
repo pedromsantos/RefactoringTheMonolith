@@ -21,9 +21,9 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-        <td th:text="${order.type.displayName}">Dine-In</td>
+        <td th:text="${order.type}">Dine-In</td>
         <td th:text="${order.customer.name}">BB-8</td>
-        <td th:text="${order.status}">Eaten</td>
+        <td th:text="${order.orderStatus}">Eaten</td>
         <td><a th:href="@{/orderDetails(orderId=${order.id})}">Order Details</a></td>
     </tr>
     </tbody>

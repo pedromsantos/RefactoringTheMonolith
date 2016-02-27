@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @EnableRabbit
-@Profile("store")
 public class StoreAmqpConfig {
 
     @Value("${monolitos.incomingOrderQueueNamePrefix}")

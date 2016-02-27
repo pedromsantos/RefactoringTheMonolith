@@ -1,0 +1,7 @@
+monolitos:
+  storeId: 10000
+  incomingOrderQueueNamePrefix: monolitos.store.
+  incomingOrderQueueNameSuffix: .incomingOrders
+
+server:
+  port: 8081
