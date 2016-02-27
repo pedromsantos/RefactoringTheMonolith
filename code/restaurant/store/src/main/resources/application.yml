@@ -1,0 +1,15 @@
+monolitos:
+  storeId: 1
+  incomingOrderQueueNamePrefix: monolitos.store.
+  incomingOrderQueueNameSuffix: .incomingOrders
+
+---
+
+spring:
+  profiles: store
+
+monolitos:
+  storeId: 10000
+
+server:
+  port: 8081

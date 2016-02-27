@@ -1,12 +1,11 @@
-package com.monolitospizza.messaging;
+package com.monolitospizza.integration;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Matt Stine
  */
-public class DispatchOrderResponse implements Serializable {
+public class DispatchOrderResponse {
     protected String errorMessage;
 
     public DispatchOrderResponse() {

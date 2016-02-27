@@ -7,5 +7,5 @@ import com.monolitospizza.model.Order;
  */
 public interface DispatchGateway {
 
-    void dispatchOrder(Order order);
+    DispatchOrderResponse dispatchOrder(Order order);
 }

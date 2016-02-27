@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Profile;
  */
 @EnableRabbit
 @Configuration
-@Profile("site")
 public class SiteAmqpConfig {
 
     @Bean

@@ -28,7 +28,7 @@ public class StoreController {
 
     @RequestMapping("/manageOrders")
     public String manageOrders(ModelMap modelMap) {
-        modelMap.addAttribute("orders", storeService.ordersForStore(storeId));
+        modelMap.addAttribute("orders", storeService.ordersForStore());
         return "manageOrders";
     }
 

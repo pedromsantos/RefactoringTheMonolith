@@ -1,7 +1,7 @@
 package com.monolitospizza.services;
 
 import com.monolitospizza.integration.DispatchGateway;
-import com.monolitospizza.messaging.DispatchOrderResponse;
+import com.monolitospizza.integration.DispatchOrderResponse;
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
@@ -33,7 +33,6 @@ public class OrderServiceTest {
     private OrderService orderService;
     private PizzaRepository mockPizzaRepository;
     private StoreRepository mockStoreRepository;
-//    private DispatchService mockDispatchService;
     private DispatchGateway mockDispatchGateway;
 
 
@@ -45,7 +44,6 @@ public class OrderServiceTest {
         mockCustomerRepository = mock(CustomerRepository.class);
         mockPizzaRepository = mock(PizzaRepository.class);
         mockStoreRepository = mock(StoreRepository.class);
-//        mockDispatchService = mock(DispatchService.class);
         mockDispatchGateway = mock(DispatchGateway.class);
         orderService = new OrderService(mockStoreRepository,
                 mockOrderRepository, mockCustomerRepository, mockPizzaRepository, mockDispatchGateway);
@@ -150,8 +148,8 @@ public class OrderServiceTest {
         when(mockOrderRepository.findOne(1L))
                 .thenReturn(order);
 
-//        when(mockDispatchService.dispatchOrder(submittedOrder))
-//                .thenReturn(new DispatchOrderResponse());
+        when(mockDispatchGateway.dispatchOrder(submittedOrder))
+                .thenReturn(new DispatchOrderResponse());
 
         orderService.submitOrder(1L);
 

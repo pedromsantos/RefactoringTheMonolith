@@ -2,7 +2,6 @@ package com.monolitospizza.services;
 
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.OrderRepository;
-import com.monolitospizza.repositories.StoreRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,29 +21,24 @@ public class StoreServiceTest {
 
     private OrderRepository mockOrderRepository;
     private StoreService storeService;
-    private StoreRepository mockStoreRepository;
 
     @Before
     public void setUp() throws Exception {
         mockOrderRepository = mock(OrderRepository.class);
-        mockStoreRepository = mock(StoreRepository.class);
 
-        storeService = new StoreService(mockStoreRepository, mockOrderRepository, "10000");
+        storeService = new StoreService(mockOrderRepository, "10000");
     }
 
     @Test
     public void loadsOrdersByStoreId() throws Exception {
         Customer customer = new Customer("Finn", "fn2187@firstorder.net", "+1(999)999-2187");
-        Store store = new Store(10000L, new Address("2187 Jakku Ave.", "Jakku", "CA", "92187"));
-        Order order = new Order(OrderType.FOR_PICKUP, customer, store);
+        Order order = new Order("Pickup", customer);
 
         List<Order> orders = Arrays.asList(order);
 
-        when(mockStoreRepository.findOne(10000L))
-                .thenReturn(store);
-        when(mockOrderRepository.findAllByStore(store))
+        when(mockOrderRepository.findAll())
                 .thenReturn(orders);
 
-        assertThat(storeService.ordersForStore(10000L), is(equalTo(orders)));
+        assertThat(storeService.ordersForStore(), is(equalTo(orders)));
     }
 }

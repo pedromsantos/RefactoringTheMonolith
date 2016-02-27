@@ -7,7 +7,8 @@
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <int-amqp:inbound-channel-adapter channel="inboundOrdersChannel"
+    <int-amqp:inbound-gateway request-channel="inboundOrdersChannel"
+                              reply-channel="outboundResponseChannel"
                                       queue-names="#{'${monolitos.incomingOrderQueueNamePrefix}'}#{'${monolitos.storeId}'}#{'${monolitos.incomingOrderQueueNameSuffix}'}"/>
 
     <int:channel id="inboundOrdersChannel"/>
@@ -18,6 +19,15 @@
     <int:channel id="inboundOrdersHandlerChannel"/>
 
     <int:service-activator input-channel="inboundOrdersHandlerChannel"
+                           output-channel="dispatchResponseChannel"
                            ref="storeService"
                            method="receiveIncomingOrder"/>
+
+    <int:channel id="dispatchResponseChannel"/>
+
+    <int:object-to-json-transformer content-type="text/plain"
+                                    input-channel="dispatchResponseChannel"
+                                    output-channel="outboundResponseChannel"/>
+
+    <int:channel id="outboundResponseChannel" />
 </beans>

@@ -1,7 +1,7 @@
 package com.monolitospizza.services;
 
 import com.monolitospizza.integration.DispatchGateway;
-import com.monolitospizza.messaging.DispatchOrderResponse;
+import com.monolitospizza.integration.DispatchOrderResponse;
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
@@ -70,13 +70,12 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         order.setStatus(OrderStatus.SUBMITTED);
         orderRepository.save(order);
-        dispatchGateway.dispatchOrder(order);
-//        DispatchOrderResponse response = dispatchService.dispatchOrder(order);
-//        if (response.getErrorMessage() != null) {
-//            order.setStatus(OrderStatus.DISPATCHED);
-//        } else {
-//            order.setStatus(OrderStatus.RECEIVED);
-//        }
-//        orderRepository.save(order);
+        DispatchOrderResponse response = dispatchGateway.dispatchOrder(order);
+        if (response.getErrorMessage() != null) {
+            order.setStatus(OrderStatus.DISPATCHED);
+        } else {
+            order.setStatus(OrderStatus.RECEIVED);
+        }
+        orderRepository.save(order);
     }
 }

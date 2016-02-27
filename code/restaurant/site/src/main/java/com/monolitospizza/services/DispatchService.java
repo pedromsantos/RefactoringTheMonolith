@@ -1,6 +1,6 @@
 package com.monolitospizza.services;
 
-import com.monolitospizza.messaging.DispatchOrderResponse;
+import com.monolitospizza.integration.DispatchOrderResponse;
 import com.monolitospizza.model.Order;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

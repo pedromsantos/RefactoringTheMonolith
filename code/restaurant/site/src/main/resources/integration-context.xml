@@ -9,7 +9,8 @@
 
     <int:gateway id="dispatchGateway"
                  service-interface="com.monolitospizza.integration.DispatchGateway"
-                 default-request-channel="submittedOrdersChannel"/>
+                 default-request-channel="submittedOrdersChannel"
+                 default-reply-channel="dispatchResponseChannel"/>
 
     <int:channel id="submittedOrdersChannel"/>
 
@@ -30,7 +31,15 @@
 
     <int:channel id="outboundOrdersChannel"/>
 
-    <int-amqp:outbound-channel-adapter channel="outboundOrdersChannel"
-                                       routing-key-expression="headers.routingKey"/>
+    <int-amqp:outbound-gateway request-channel="outboundOrdersChannel"
+                               reply-channel="inboundResponseChannel"
+                               routing-key-expression="headers.routingKey"/>
+
+    <int:channel id="inboundResponseChannel"/>
+
+    <int:json-to-object-transformer input-channel="inboundResponseChannel"
+                                    output-channel="dispatchResponseChannel"/>
+
+    <int:channel id="dispatchResponseChannel"/>
 
 </beans>
