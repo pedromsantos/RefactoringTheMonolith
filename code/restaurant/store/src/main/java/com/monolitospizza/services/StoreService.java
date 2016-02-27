@@ -50,4 +50,8 @@ public class StoreService {
         }
         return new DispatchOrderResponse();
     }
+
+    public Order orderDetails(Long orderId) {
+        return orderRepository.findOne(orderId);
+    }
 }

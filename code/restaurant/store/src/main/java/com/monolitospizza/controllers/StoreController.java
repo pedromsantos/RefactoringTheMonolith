@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Matt Stine
@@ -29,5 +30,12 @@ public class StoreController {
     public String manageOrders(ModelMap modelMap) {
         modelMap.addAttribute("orders", storeService.ordersForStore(storeId));
         return "manageOrders";
+    }
+
+    @RequestMapping("/orderDetails")
+    public String orderDetails(@RequestParam("orderId") Long orderId,
+                               ModelMap modelMap) {
+        modelMap.addAttribute("currentOrder", storeService.orderDetails(orderId));
+        return "orderDetails";
     }
 }

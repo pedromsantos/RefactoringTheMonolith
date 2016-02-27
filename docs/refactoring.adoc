@@ -11,3 +11,13 @@ So in this stage we:
 * Refactor `build.gradle` to manage three subprojects, and we add `settings.gradle`.
 * Parcel code out into the various subprojects.
 * Fix compile errors and failing tests.
+
+== Step Two: Finish an Existing Feature
+
+We actually stopped work in progress when we completed Step One. A team has been laboring to finish up the order management screen for the stores, but has been unable to deliver due to churn on the website. Now that the applications are independently deployable, the store team can complete that UI feature and deploy it without waiting on the site team.
+
+So in this stage we:
+
+* Add a `StoreService` method, `orderDetails`.
+* Add a `StoreController` method, `orderDetails`.
+* Add a UI template, `orderDetails.html`.

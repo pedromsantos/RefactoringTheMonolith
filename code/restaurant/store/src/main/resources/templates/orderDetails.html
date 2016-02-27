@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Monolito's Pizza</title>
+</head>
+<body>
+<p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<h1>Order Details for #<span th:text="${currentOrder.id}">12345</span></h1>
+
+<p>
+    <a th:href="@{/manageOrders}">Back to Order Management</a>
+</p>
+
+<ul>
+    <li th:each="pizza : ${currentOrder.pizzas}">
+        <span th:text="|${pizza.size} ${pizza.crust} Pizza (${pizza.sauce} Sauce) - $${#numbers.formatDecimal(pizza.price,1,2,'POINT')}|">Size Crust Pizza (Sauce) - $0.00</span>
+        <p>
+            Toppings left:
+        <ul>
+            <li th:each="topping : ${pizza.leftHalf.toppings}" th:text="${topping.name}">Sausage</li>
+        </ul>
+        </p>
+        <p>
+            Toppings right:
+        <ul>
+            <li th:each="topping : ${pizza.rightHalf.toppings}" th:text="${topping.name}">Sausage</li>
+        </ul>
+        </p>
+    </li>
+</ul>
+
+</body>
+</html>

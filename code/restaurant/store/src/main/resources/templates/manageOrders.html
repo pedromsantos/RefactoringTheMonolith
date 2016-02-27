@@ -24,7 +24,7 @@
         <td th:text="${order.type.displayName}">Dine-In</td>
         <td th:text="${order.customer.name}">BB-8</td>
         <td th:text="${order.status}">Eaten</td>
-        <td><a href="#">Order Details</a></td>
+        <td><a th:href="@{/orderDetails(orderId=${order.id})}">Order Details</a></td>
     </tr>
     </tbody>
 </table>
