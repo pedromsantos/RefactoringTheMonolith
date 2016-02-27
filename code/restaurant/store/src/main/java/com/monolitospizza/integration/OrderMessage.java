@@ -62,4 +62,16 @@ public class OrderMessage {
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }
+
+    @Override
+    public String toString() {
+        return "OrderMessage{" +
+                "type='" + type + '\'' +
+                ", customerMessage=" + customerMessage +
+                ", pizzaMessages=" + pizzaMessages +
+                ", price=" + price +
+                ", id=" + id +
+                ", storeId=" + storeId +
+                '}';
+    }
 }

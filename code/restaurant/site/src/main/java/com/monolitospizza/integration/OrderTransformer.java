@@ -1,13 +1,17 @@
 package com.monolitospizza.integration;
 
 import com.monolitospizza.model.Order;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Matt Stine
  */
+@Component
 public class OrderTransformer {
     public OrderMessage transform(Order order) {
         OrderMessage orderMessage = new OrderMessage();
+        orderMessage.setId(order.getId());
+        orderMessage.setStoreId(order.getStore().getId());
         orderMessage.setType(order.getType().getDisplayName());
         orderMessage.setPrice(order.getPrice());
 

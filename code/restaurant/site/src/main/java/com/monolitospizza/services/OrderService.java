@@ -1,5 +1,6 @@
 package com.monolitospizza.services;
 
+import com.monolitospizza.integration.DispatchGateway;
 import com.monolitospizza.messaging.DispatchOrderResponse;
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
@@ -20,19 +21,21 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final PizzaRepository pizzaRepository;
-    private final DispatchService dispatchService;
+//    private final DispatchService dispatchService;
+    private final DispatchGateway dispatchGateway;
 
     @Autowired
     public OrderService(StoreRepository storeRepository,
                         OrderRepository orderRepository,
                         CustomerRepository customerRepository,
                         PizzaRepository pizzaRepository,
-                        DispatchService dispatchService) {
+                        DispatchGateway dispatchGateway) {
         this.storeRepository = storeRepository;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.pizzaRepository = pizzaRepository;
-        this.dispatchService = dispatchService;
+//        this.dispatchService = dispatchService;
+        this.dispatchGateway = dispatchGateway;
     }
 
     public Order startNewPickupOrder(long customerId) {
@@ -67,12 +70,13 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         order.setStatus(OrderStatus.SUBMITTED);
         orderRepository.save(order);
-        DispatchOrderResponse response = dispatchService.dispatchOrder(order);
-        if (response.getErrorMessage() != null) {
-            order.setStatus(OrderStatus.DISPATCHED);
-        } else {
-            order.setStatus(OrderStatus.RECEIVED);
-        }
-        orderRepository.save(order);
+        dispatchGateway.dispatchOrder(order);
+//        DispatchOrderResponse response = dispatchService.dispatchOrder(order);
+//        if (response.getErrorMessage() != null) {
+//            order.setStatus(OrderStatus.DISPATCHED);
+//        } else {
+//            order.setStatus(OrderStatus.RECEIVED);
+//        }
+//        orderRepository.save(order);
     }
 }

@@ -27,7 +27,7 @@ public class OrderTransformerTest {
         );
         customer.setAddress(address);
 
-        Order order = new Order(OrderType.FOR_DELIVERY, customer, new Store());
+        Order order = new Order(10000L, OrderType.FOR_DELIVERY, customer, new Store(1L, new Address()));
 
         Pizza firstPizza = new Pizza(new Size("Large", BigDecimal.valueOf(12.99)),
                 new Crust("Thin"),
@@ -50,6 +50,8 @@ public class OrderTransformerTest {
         OrderTransformer transformer = new OrderTransformer();
 
         OrderMessage orderMessage = transformer.transform(order);
+        assertThat(orderMessage.getId(), is(equalTo(order.getId())));
+        assertThat(orderMessage.getStoreId(), is(equalTo(order.getStore().getId())));
         assertThat(orderMessage.getType(), is(equalTo(OrderType.FOR_DELIVERY.getDisplayName())));
         assertThat(orderMessage.getPrice(), is(equalTo(BigDecimal.valueOf(28.98))));
 

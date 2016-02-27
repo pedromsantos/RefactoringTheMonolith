@@ -20,7 +20,7 @@ public class Address implements Serializable {
     private String state;
     private String postalCode;
 
-    private Address() {
+    public Address() {
     }
 
     public Address(String streetAddress, String city, String state, String postalCode) {
