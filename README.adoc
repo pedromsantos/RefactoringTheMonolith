@@ -30,6 +30,13 @@ Recently the Monolito brothers learned about the promise of microservices archit
 
 == A Tour of the Refactoring
 
+The refactoring can be traced through a series of tagged commits:
+
+monolith-v1:: version 1 of the monolitos monolith
+refactoring-v1:: Independent Deployability of Store and Site
+refactoring-v2:: Finish Up Store Order Details Feature
+refactoring-v3:: Decouple the Contract between Site and Store
+
 The refactoring is documented link:docs/refactoring.adoc[here] in detail.
 
 == What this Presentation ``Punts'' On
