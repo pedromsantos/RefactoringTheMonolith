@@ -1,0 +1,5 @@
+server:
+  port: 8082
+
+monolitos:
+  siteApplicationAddress: http://localhost:8080

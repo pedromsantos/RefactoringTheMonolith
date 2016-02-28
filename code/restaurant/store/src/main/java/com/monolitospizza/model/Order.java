@@ -24,7 +24,6 @@ public class Order {
     private List<Pizza> pizzas = new ArrayList<>();
     private BigDecimal price;
     @Id
-    @GeneratedValue
     private Long id;
     private Long storeId;
 

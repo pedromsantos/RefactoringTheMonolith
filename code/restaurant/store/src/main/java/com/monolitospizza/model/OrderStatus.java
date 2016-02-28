@@ -7,7 +7,8 @@ import java.io.Serializable;
  */
 public enum OrderStatus implements Serializable {
     RECEIVED("Received"),
-    COMPLETED("Completed");
+    READY_FOR_PICKUP("Ready for Pickup"),
+    OUT_FOR_DELIVERY("Out for Delivery");
 
     private final String displayName;
 

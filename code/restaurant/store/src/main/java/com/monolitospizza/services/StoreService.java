@@ -1,14 +1,11 @@
 package com.monolitospizza.services;
 
+import com.monolitospizza.acl.TrackingServiceFacade;
 import com.monolitospizza.integration.DispatchOrderResponse;
 import com.monolitospizza.integration.OrderMessage;
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.OrderRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +17,12 @@ import java.util.List;
 public class StoreService {
 
     private final OrderRepository orderRepository;
+    private final TrackingServiceFacade trackingServiceFacade;
 
     @Autowired
-    public StoreService(OrderRepository orderRepository) {
+    public StoreService(OrderRepository orderRepository, TrackingServiceFacade trackingServiceFacade) {
         this.orderRepository = orderRepository;
+        this.trackingServiceFacade = trackingServiceFacade;
     }
 
     public List<Order> ordersForStore() {
@@ -41,6 +40,13 @@ public class StoreService {
 
     public Order orderDetails(Long orderId) {
         return orderRepository.findOne(orderId);
+    }
+
+    public void updateOrderStatus(Long orderId, OrderStatus newOrderStatus) {
+        Order order = orderRepository.findOne(orderId);
+        order.setOrderStatus(newOrderStatus);
+        orderRepository.save(order);
+        trackingServiceFacade.updateOrderStatus(orderId, newOrderStatus);
     }
 
     private Order transformOrderMessageToOrder(OrderMessage orderMessage) {

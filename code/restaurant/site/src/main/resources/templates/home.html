@@ -6,6 +6,26 @@
 <body>
 <h1>Welcome to Monolito's Pizza!</h1>
 
+<h2>Your recent orders:</h2>
+<table>
+    <thead>
+    <tr>
+        <td>Order #</td>
+        <td>Type</td>
+        <td>Store</td>
+        <td>Status</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${currentOrders}">
+        <td th:text="${order.id}">42</td>
+        <td th:text="${order.type.displayName}">Dine-In</td>
+        <td th:text="${order.store.address.streetAddress}">Dagobah</td>
+        <td th:text="${order.status}">Eaten</td>
+    </tr>
+    </tbody>
+</table>
+
 <h2>Place a New Order:</h2>
 <form action="#" th:action="@{/newOrder}" method="post">
     <p>

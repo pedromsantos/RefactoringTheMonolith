@@ -2,10 +2,7 @@ package com.monolitospizza.services;
 
 import com.monolitospizza.integration.DispatchGateway;
 import com.monolitospizza.integration.DispatchOrderResponse;
-import com.monolitospizza.model.Order;
-import com.monolitospizza.model.OrderStatus;
-import com.monolitospizza.model.OrderType;
-import com.monolitospizza.model.Pizza;
+import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
 import com.monolitospizza.repositories.PizzaRepository;
@@ -14,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Matt Stine
@@ -82,5 +82,15 @@ public class OrderService {
             order.setStatus(OrderStatus.RECEIVED);
         }
         orderRepository.save(order);
+    }
+
+
+    public List<Order> loadCurrentOrdersForCustomer(Customer currentCustomer) {
+        List<Order> currentOrders = new ArrayList<>();
+
+        currentOrders.addAll(orderRepository.findAllByCustomerAndStatus(currentCustomer, OrderStatus.RECEIVED));
+        currentOrders.addAll(orderRepository.findAllByCustomerAndStatus(currentCustomer, OrderStatus.COMPLETED));
+
+        return currentOrders;
     }
 }

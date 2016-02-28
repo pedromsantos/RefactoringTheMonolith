@@ -1,7 +1,9 @@
 package com.monolitospizza.controllers;
 
+import com.monolitospizza.model.Customer;
 import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.StoreRepository;
+import com.monolitospizza.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,12 +20,15 @@ public class HomeController {
 
     private final CustomerRepository customerRepository;
     private final StoreRepository storeRepository;
+    private final OrderService orderService;
 
     @Autowired
     public HomeController(CustomerRepository customerRepository,
-                          StoreRepository storeRepository) {
+                          StoreRepository storeRepository,
+                          OrderService orderService) {
         this.customerRepository = customerRepository;
         this.storeRepository = storeRepository;
+        this.orderService = orderService;
     }
 
     @RequestMapping("/")
@@ -34,8 +39,10 @@ public class HomeController {
         }
 
         String email = principal.getName();
-        modelMap.addAttribute("currentCustomer", customerRepository.findByEmail(email));
+        Customer currentCustomer = customerRepository.findByEmail(email);
+        modelMap.addAttribute("currentCustomer", currentCustomer);
         modelMap.addAttribute("stores", storeRepository.findAll());
+        modelMap.addAttribute("currentOrders", orderService.loadCurrentOrdersForCustomer(currentCustomer));
         return "home";
     }
 }

@@ -56,6 +56,20 @@ project(':site') {
 	}
 }
 
+project(':site-tracking') {
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-actuator')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-devtools')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+
+	jar {
+		baseName = 'restaurant-site-tracking'
+		version = '0.0.1-SNAPSHOT'
+	}
+}
+
 project(':store') {
 	dependencies {
 		compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -74,6 +88,20 @@ project(':store') {
 
 	jar {
 		baseName = 'restaurant-store'
+		version = '0.0.1-SNAPSHOT'
+	}
+}
+
+project(':store-tracking') {
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-actuator')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-devtools')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+
+	jar {
+		baseName = 'restaurant-store-tracking'
 		version = '0.0.1-SNAPSHOT'
 	}
 }

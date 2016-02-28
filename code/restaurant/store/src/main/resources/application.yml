@@ -2,6 +2,7 @@ monolitos:
   storeId: 10000
   incomingOrderQueueNamePrefix: monolitos.store.
   incomingOrderQueueNameSuffix: .incomingOrders
+  storeTrackingApplicationAddress: http://localhost:8083
 
 server:
   port: 8081

@@ -13,6 +13,7 @@
 <table>
     <thead>
     <tr>
+        <td>Order #</td>
         <td>Type</td>
         <td>Customer Name</td>
         <td>Status</td>
@@ -21,9 +22,29 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
+        <td th:text="${order.id}">42</td>
         <td th:text="${order.type}">Dine-In</td>
         <td th:text="${order.customer.name}">BB-8</td>
-        <td th:text="${order.orderStatus}">Eaten</td>
+        <td>
+            <form action="#" th:action="@{/updateOrderStatus}" method="post">
+                <input type="hidden" th:name="orderId" th:value="${order.id}"/>
+                <select th:name="orderStatus" th:value="${order.orderStatus}">
+                    <option th:value="${T(com.monolitospizza.model.OrderStatus).RECEIVED}"
+                            th:text="${T(com.monolitospizza.model.OrderStatus).RECEIVED.displayName}"
+                            th:selected="${order.orderStatus == T(com.monolitospizza.model.OrderStatus).RECEIVED}">Status
+                    </option>
+                    <option th:value="${T(com.monolitospizza.model.OrderStatus).READY_FOR_PICKUP}"
+                            th:text="${T(com.monolitospizza.model.OrderStatus).READY_FOR_PICKUP.displayName}"
+                            th:selected="${order.orderStatus == T(com.monolitospizza.model.OrderStatus).READY_FOR_PICKUP}">Status
+                    </option>
+                    <option th:value="${T(com.monolitospizza.model.OrderStatus).OUT_FOR_DELIVERY}"
+                            th:text="${T(com.monolitospizza.model.OrderStatus).OUT_FOR_DELIVERY.displayName}"
+                            th:selected="${order.orderStatus == T(com.monolitospizza.model.OrderStatus).OUT_FOR_DELIVERY}">Status
+                    </option>
+                </select>
+                <button type="submit">Update Status</button>
+            </form>
+        </td>
         <td><a th:href="@{/orderDetails(orderId=${order.id})}">Order Details</a></td>
     </tr>
     </tbody>

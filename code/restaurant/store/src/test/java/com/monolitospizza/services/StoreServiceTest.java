@@ -1,5 +1,6 @@
 package com.monolitospizza.services;
 
+import com.monolitospizza.acl.TrackingServiceFacade;
 import com.monolitospizza.model.*;
 import com.monolitospizza.repositories.OrderRepository;
 import org.junit.Before;
@@ -21,12 +22,14 @@ public class StoreServiceTest {
 
     private OrderRepository mockOrderRepository;
     private StoreService storeService;
+    private TrackingServiceFacade mockTrackingServiceFacade;
 
     @Before
     public void setUp() throws Exception {
         mockOrderRepository = mock(OrderRepository.class);
+        mockTrackingServiceFacade = mock(TrackingServiceFacade.class);
 
-        storeService = new StoreService(mockOrderRepository);
+        storeService = new StoreService(mockOrderRepository, mockTrackingServiceFacade);
     }
 
     @Test
