@@ -7,6 +7,8 @@ import com.monolitospizza.repositories.CustomerRepository;
 import com.monolitospizza.repositories.OrderRepository;
 import com.monolitospizza.repositories.PizzaRepository;
 import com.monolitospizza.repositories.StoreRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -72,10 +74,13 @@ public class OrderService {
         orderRepository.save(order);
         DispatchOrderResponse response = dispatchGateway.dispatchOrder(order);
         if (response.getErrorMessage() != null) {
+            logger.error(response.getErrorMessage());
             order.setStatus(OrderStatus.DISPATCHED);
         } else {
             order.setStatus(OrderStatus.RECEIVED);
         }
         orderRepository.save(order);
     }
+
+    Logger logger = LoggerFactory.getLogger(getClass());
 }

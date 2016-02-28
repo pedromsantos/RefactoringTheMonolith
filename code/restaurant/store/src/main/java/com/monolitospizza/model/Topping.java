@@ -1,11 +1,21 @@
 package com.monolitospizza.model;
 
+import javax.persistence.*;
+
 /**
  * @author Matt Stine
  */
+@Entity
 public class Topping {
+
+    @Id
+    @GeneratedValue
+    private Long id;
     private String name;
     private String location;
+    @ManyToOne
+    @JoinColumn(name = "PIZZA_ID")
+    private Pizza pizza;
 
     public String getName() {
         return name;
@@ -29,5 +39,21 @@ public class Topping {
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Pizza getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(Pizza pizza) {
+        this.pizza = pizza;
     }
 }

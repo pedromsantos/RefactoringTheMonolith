@@ -19,9 +19,12 @@ public class Pizza {
     private String size;
     private String crust;
     private String sauce;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<Topping> toppings = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
 
     public String getSize() {
         return size;
@@ -51,7 +54,7 @@ public class Pizza {
         return toppings;
     }
 
-    public void addToppingMessage(Topping topping) {
+    public void addTopping(Topping topping) {
         this.toppings.add(topping);
     }
 
@@ -63,5 +66,21 @@ public class Pizza {
                 ", sauce='" + sauce + '\'' +
                 ", toppingMessages=" + toppings +
                 '}';
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -12,9 +12,11 @@ import java.util.List;
  * @author Matt Stine
  */
 @Entity
+@Table(name = "ORDERS")
 public class Order {
+    private OrderStatus orderStatus;
     private String type;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="CUSTOMER_ID")
     private Customer customer;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -25,6 +27,9 @@ public class Order {
     @GeneratedValue
     private Long id;
     private Long storeId;
+
+    public Order() {
+    }
 
     public Order(String type, Customer customer) {
         this.type = type;
@@ -51,7 +56,7 @@ public class Order {
         return pizzas;
     }
 
-    public void addPizzaMessage(Pizza pizza) {
+    public void addPizza(Pizza pizza) {
         this.pizzas.add(pizza);
     }
 
@@ -81,13 +86,22 @@ public class Order {
 
     @Override
     public String toString() {
-        return "OrderMessage{" +
-                "type='" + type + '\'' +
-                ", customerMessage=" + customer +
-                ", pizzaMessages=" + pizzas +
+        return "Order{" +
+                "orderStatus=" + orderStatus +
+                ", type='" + type + '\'' +
+                ", customer=" + customer +
+                ", pizzas=" + pizzas +
                 ", price=" + price +
                 ", id=" + id +
                 ", storeId=" + storeId +
                 '}';
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
