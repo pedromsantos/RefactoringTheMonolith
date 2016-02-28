@@ -48,6 +48,7 @@ While these subtopics deserve consideration, in the interest of fitting in to th
 * Polyglot Persistence
 * Distributed Transactions, Event Sourcing/CQRS
 * Fancy, modern, Javascript-y web UI's - I am *not* a UI developer.
+* Separating the projects into individual Gradle builds for maintenance by separate teams (only for expediency!).
 
 == Background Reading
 
