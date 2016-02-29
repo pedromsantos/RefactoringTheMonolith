@@ -46,7 +46,7 @@ So in this stage we:
 
 Now it's time to follow my guidance from _Migrating to Cloud-Native Application Architectures_ and implement new features as microservices. In this case, we'd like to implement order tracking updates. As a pizza order travels through the various stages of preparation in the store, we'd like our customers to be able to see these status updates on the website.
 
-We don't want to introduce any additional couplings between the Site application monolith and the Store application monolith. Instead, we'll create a microservice on each side of the relationship, integrate those with the existing monoliths via an _anti-corruption layer_, and then integrate our new microservices with each other. At the stage we're going to keep things ``simple'' and not introduce any service discovery technology. Instead, we'll simply provide the addresses of each service as basic configuration properties. 
+We don't want to introduce any additional couplings between the Site application monolith and the Store application monolith. Instead, we'll create a microservice on each side of the relationship, integrate those with the existing monoliths via an _anti-corruption layer_, and then integrate our new microservices with each other. At the stage we're going to keep things ``simple'' and not introduce any service discovery technology. Instead, we'll simply provide the addresses of each service as basic configuration properties.
 
 So in this stage we:
 
@@ -57,3 +57,15 @@ So in this stage we:
 * Build an Anti-Corruption Layer in the Store Application. It is found in the `com.monolitospizza.acl` package, and consists of a facade, adapter, and translator, as defined in my book.
 * Implement an Order Status Update UI in the Store Application.
 * Fix a bug in the Store Application's JPA model that was not honoring incoming order numbers.
+
+== Step Five: Separate Store UI from Store Service
+
+It's time to begin strangling one of the monoliths. We'd like to separate the development of the UI for the store from the development of the store's microservices. We'll again use an _anti-corruption layer_, this time a simple facade that translates incoming HTTP requests into the current calls to `StoreService`. This facade forms the beginnings of a true API layer for Store operations. We move all of the UI related functionality into it's own microservice.
+
+So in this stage we:
+
+* Create a new microservice, `site-ui`, and add it as a Gradle subproject.
+* Move all of the MVC controllers and templates, and all of the MVC security configuration, to the `site-ui` project.
+* Make the MVC controllers compile again by providing a domain model and service that makes outbound HTTP calls.
+* Build an additional Anti-Corruption layer in the Store Application. It is also found in the `com.monolitospizza.acl` package, and consists only of a facade, `UiFacade`.
+* Because we're not going to the trouble (for this exercise) of creating a model for the API, we need to add `@JsonIgnore` annotations to the inverse side of two JPA relations to prevent infinite recursion. 
