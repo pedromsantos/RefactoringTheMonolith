@@ -2,16 +2,16 @@ package com.monolitospizza;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
  * @author Matt Stine
  */
 @SpringBootApplication
-@EnableDiscoveryClient
-public class StoreUiApplication {
+@EnableEurekaServer
+public class EurekaServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(StoreUiApplication.class, args);
+        SpringApplication.run(EurekaServer.class, args);
     }
 }

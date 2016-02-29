@@ -1,1 +1,1 @@
-include 'site', 'store', 'site-tracking', 'store-tracking', 'store-ui'
+include 'site', 'store', 'site-tracking', 'store-tracking', 'store-ui', 'config-server', 'eureka'

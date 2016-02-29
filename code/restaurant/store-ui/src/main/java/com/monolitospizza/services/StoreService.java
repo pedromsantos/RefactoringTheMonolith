@@ -18,26 +18,24 @@ import java.util.List;
 @Service
 public class StoreService {
 
-    private final String storeApplicationAddress;
     private final RestTemplate restTemplate;
 
     @Autowired
-    public StoreService(@Value("${monolitos.storeApplicationAddress}") String storeApplicationAddress) {
-        this.storeApplicationAddress = storeApplicationAddress;
-        restTemplate = new RestTemplate();
+    public StoreService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public List<Order> ordersForStore() {
         ParameterizedTypeReference<List<Order>> responseType = new ParameterizedTypeReference<List<Order>>() {
         };
-        return restTemplate.exchange(storeApplicationAddress + "/orders", HttpMethod.GET, null, responseType).getBody();
+        return restTemplate.exchange("http://store/orders", HttpMethod.GET, null, responseType).getBody();
     }
 
     public Order orderDetails(Long orderId) {
-        return restTemplate.getForObject(storeApplicationAddress + "/order/{orderId}", Order.class, orderId);
+        return restTemplate.getForObject("http://store/order/{orderId}", Order.class, orderId);
     }
 
     public void updateOrderStatus(Long orderId, OrderStatus orderStatus) {
-        restTemplate.put(storeApplicationAddress + "/order/{orderId}?orderStatus={orderStatus}", null, orderId, orderStatus);
+        restTemplate.put("http://store/order/{orderId}?orderStatus={orderStatus}", "", orderId, orderStatus);
     }
 }

@@ -1,5 +1,2 @@
 server:
   port: 8084
-
-monolitos:
-  storeApplicationAddress: http://localhost:8081

@@ -21,17 +21,16 @@ import org.springframework.web.client.RestTemplate;
 public class TrackingServiceAdaptor {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String storeTrackingApplicationAddress;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public TrackingServiceAdaptor(@Value("${monolitos.storeTrackingApplicationAddress}") String storeTrackingApplicationAddress) {
-        this.storeTrackingApplicationAddress = storeTrackingApplicationAddress;
+    public TrackingServiceAdaptor(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public void sendStatusUpdate(Long orderId, String newOrderStatus) {
-        RestTemplate restTemplate = new RestTemplate();
         logger.info("Sending order status update of {} for order #{} to Store Tracking Application", newOrderStatus, orderId);
-        ResponseEntity<UpdateOrderStatusResponse> response = restTemplate.exchange(storeTrackingApplicationAddress + "/order/{orderId}?orderStatus={orderStatus}", HttpMethod.PUT, new HttpEntity<String>(""), UpdateOrderStatusResponse.class, orderId, newOrderStatus);
+        ResponseEntity<UpdateOrderStatusResponse> response = restTemplate.exchange("http://store-tracking/order/{orderId}?orderStatus={orderStatus}", HttpMethod.PUT, new HttpEntity<String>(""), UpdateOrderStatusResponse.class, orderId, newOrderStatus);
         if (response.getStatusCode().equals(HttpStatus.OK)) {
             logger.info("Order status update successful!");
         } else {
