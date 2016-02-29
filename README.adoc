@@ -51,6 +51,7 @@ While these subtopics deserve consideration, in the interest of fitting in to th
 * Distributed Transactions, Event Sourcing/CQRS
 * Fancy, modern, Javascript-y web UI's - I am *not* a UI developer.
 * Separating the projects into individual Gradle builds for maintenance by separate teams (only for expediency!).
+* Securing the interactions between various microservices (for now!).
 
 == Background Reading
 
