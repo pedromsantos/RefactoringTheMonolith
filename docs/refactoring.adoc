@@ -68,4 +68,17 @@ So in this stage we:
 * Move all of the MVC controllers and templates, and all of the MVC security configuration, to the `site-ui` project.
 * Make the MVC controllers compile again by providing a domain model and service that makes outbound HTTP calls.
 * Build an additional Anti-Corruption layer in the Store Application. It is also found in the `com.monolitospizza.acl` package, and consists only of a facade, `UiFacade`.
-* Because we're not going to the trouble (for this exercise) of creating a model for the API, we need to add `@JsonIgnore` annotations to the inverse side of two JPA relations to prevent infinite recursion. 
+* Because we're not going to the trouble (for this exercise) of creating a model for the API, we need to add `@JsonIgnore` annotations to the inverse side of two JPA relations to prevent infinite recursion.
+
+== Step Six: Integrate Store Microservices via Spring Cloud
+
+Now that we have three separate microservices for the Store application side of things, it's becoming awkward to manage the integrations by manually passing addresses around. Fortunately we can leverage Spring Cloud to introduce distributed configuration management and service discovery (via Netflix OSS Eureka) to our architecture. This will allow us to refer to services by logical names rather than depending on fixed addresses passed in as static configuration.
+
+So in this stage we:
+
+* Add a `config-server` Gradle subproject in order to provide a http://cloud.spring.io/spring-cloud-config/[Spring Cloud Config Server].
+* Add `eureka` Gradle subproject in order to provide a http://cloud.spring.io/spring-cloud-netflix/[Spring Cloud Netflix Eureka Server].
+* Update `build.gradle` to use Spring Cloud Brixton.M5 dependency management.
+* Add `spring-cloud-starter-config` and `spring-cloud-starter-eureka` to the list of dependencies for each of the Store microservices.
+* Add `@EnableDiscoveryClient` to each Store microservices to enable service discovery.
+* Use a load balanced `RestTemplate` (powered by Spring Cloud Netflix Eureka Client and Ribbon) for communication.
