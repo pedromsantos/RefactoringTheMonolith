@@ -1,24 +1,12 @@
 package com.monolitospizza.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
 /**
  * @author Matt Stine
  */
-@Entity
 public class Topping {
-
-    @Id
-    @GeneratedValue
     private Long id;
     private String name;
     private String location;
-    @ManyToOne
-    @JoinColumn(name = "PIZZA_ID")
-    @JsonIgnore
-    private Pizza pizza;
 
     public String getName() {
         return name;
@@ -38,7 +26,7 @@ public class Topping {
 
     @Override
     public String toString() {
-        return "ToppingMessage{" +
+        return "Topping{" +
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
@@ -52,11 +40,4 @@ public class Topping {
         this.id = id;
     }
 
-    public Pizza getPizza() {
-        return pizza;
-    }
-
-    public void setPizza(Pizza pizza) {
-        this.pizza = pizza;
-    }
 }

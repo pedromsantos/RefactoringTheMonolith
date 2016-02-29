@@ -77,8 +77,6 @@ project(':store') {
 		compile('org.springframework.boot:spring-boot-starter-data-jpa')
 		compile('org.springframework.boot:spring-boot-starter-integration')
 		compile('org.springframework.integration:spring-integration-amqp')
-		compile('org.springframework.boot:spring-boot-starter-security')
-		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 		compile('org.springframework.boot:spring-boot-starter-web')
 		compile('org.springframework.boot:spring-boot-devtools')
 		runtime('com.h2database:h2')
@@ -102,6 +100,22 @@ project(':store-tracking') {
 
 	jar {
 		baseName = 'restaurant-store-tracking'
+		version = '0.0.1-SNAPSHOT'
+	}
+}
+
+project(':store-ui') {
+	dependencies {
+		compile('org.springframework.boot:spring-boot-starter-actuator')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+		compile('org.springframework.boot:spring-boot-devtools')
+		compile('org.springframework.boot:spring-boot-starter-security')
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+
+	jar {
+		baseName = 'restaurant-store-ui'
 		version = '0.0.1-SNAPSHOT'
 	}
 }

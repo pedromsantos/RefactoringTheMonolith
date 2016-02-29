@@ -1,1 +1,1 @@
-include 'site', 'store', 'site-tracking', 'store-tracking'
+include 'site', 'store', 'site-tracking', 'store-tracking', 'store-ui'
