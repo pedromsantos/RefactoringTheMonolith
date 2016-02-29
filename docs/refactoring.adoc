@@ -40,4 +40,6 @@ So in this stage we:
 * Introduce Spring Integration on both sides of the contract to facilitate the transformation and serialization of the model, as well as the AMQP orchestration.
 * Eliminate the `common` project by inlining the JPA model and Spring Data repositories into the `site` project.
 * Implement a lightweight JPA domain model in the `store` project.
-* Convert the `store` UI to use the new lightweight domain model. 
+* Convert the `store` UI to use the new lightweight domain model.
+
+== Step Four: Implement Order Tracking Updates as Microservices

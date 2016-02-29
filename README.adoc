@@ -36,6 +36,7 @@ monolith-v1:: version 1 of the monolitos monolith
 refactoring-v1:: Independent Deployability of Store and Site
 refactoring-v2:: Finish Up Store Order Details Feature
 refactoring-v3:: Decouple the Contract between Site and Store
+refactoring-v4:: Implement Order Tracking Updates as Microservices
 
 The refactoring is documented link:docs/refactoring.adoc[here] in detail.
 
