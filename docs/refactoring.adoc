@@ -1,6 +1,10 @@
 = A Tour of the Refactoring
 :compat-mode:
 
+== Starting Topology
+
+image::../images/Diagrams.001.jpeg[]
+
 == Step One: Independent Deployability
 
 There's no real hope of having any sort of success with microservices as long as we're in the state where the same exact codebase must be deployed to run the website and to support managing individual stores. The eventual microservices we build will likely look very different in each context. So our first step is to create two independently deployable monoliths, each supporting a `common` shared library. The scope of the shared library gives us a real picture of just how tightly coupled the site and store code really are.
@@ -48,6 +52,10 @@ Now it's time to follow my guidance from _Migrating to Cloud-Native Application 
 
 We don't want to introduce any additional couplings between the Site application monolith and the Store application monolith. Instead, we'll create a microservice on each side of the relationship, integrate those with the existing monoliths via an _anti-corruption layer_, and then integrate our new microservices with each other. At the stage we're going to keep things ``simple'' and not introduce any service discovery technology. Instead, we'll simply provide the addresses of each service as basic configuration properties.
 
+New topology:
+
+image::../images/Diagrams.002.jpeg[]
+
 So in this stage we:
 
 * Implement an Order Status UI in the Site Application.
@@ -62,6 +70,10 @@ So in this stage we:
 
 It's time to begin strangling one of the monoliths. We'd like to separate the development of the UI for the store from the development of the store's microservices. We'll again use an _anti-corruption layer_, this time a simple facade that translates incoming HTTP requests into the current calls to `StoreService`. This facade forms the beginnings of a true API layer for Store operations. We move all of the UI related functionality into it's own microservice.
 
+New topology:
+
+image::../images/Diagrams.003.jpeg[]
+
 So in this stage we:
 
 * Create a new microservice, `site-ui`, and add it as a Gradle subproject.
@@ -73,6 +85,10 @@ So in this stage we:
 == Step Six: Integrate Store Microservices via Spring Cloud
 
 Now that we have three separate microservices for the Store application side of things, it's becoming awkward to manage the integrations by manually passing addresses around. Fortunately we can leverage Spring Cloud to introduce distributed configuration management and service discovery (via Netflix OSS Eureka) to our architecture. This will allow us to refer to services by logical names rather than depending on fixed addresses passed in as static configuration.
+
+New topology:
+
+image::../images/Diagrams.004.jpeg[]
 
 So in this stage we:
 
