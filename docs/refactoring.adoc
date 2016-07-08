@@ -76,8 +76,8 @@ image::../images/Diagrams.003.jpeg[]
 
 So in this stage we:
 
-* Create a new microservice, `site-ui`, and add it as a Gradle subproject.
-* Move all of the MVC controllers and templates, and all of the MVC security configuration, to the `site-ui` project.
+* Create a new microservice, `store-ui`, and add it as a Gradle subproject.
+* Move all of the MVC controllers and templates, and all of the MVC security configuration, to the `store-ui` project.
 * Make the MVC controllers compile again by providing a domain model and service that makes outbound HTTP calls.
 * Build an additional Anti-Corruption layer in the Store Application. It is also found in the `com.monolitospizza.acl` package, and consists only of a facade, `UiFacade`.
 * Because we're not going to the trouble (for this exercise) of creating a model for the API, we need to add `@JsonIgnore` annotations to the inverse side of two JPA relations to prevent infinite recursion.
